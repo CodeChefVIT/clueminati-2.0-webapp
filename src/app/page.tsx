@@ -1,77 +1,35 @@
-import Image from "next/image";
 import Link from "next/link";
-import logo from "../../public/cc-logo.svg";
 
 export default function HomePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8">
-      <div className="w-full max-w-xl rounded-lg bg-white p-8 text-center text-black shadow-lg">
-        <Image
-          src={logo as HTMLImageElement}
-          alt="CodeChef-VIT Logo"
-          width={150}
-          height={150}
-          className="mx-auto mb-4"
-        />
-        <h1 className="mb-4 text-6xl font-bold">CodeChef-VIT</h1>
-        <p className="mb-6 text-2xl">Portal Template Repository</p>
-        <p className="mb-2 text-lg font-semibold text-gray-700">
-          TanStack Query is Initialised in this Repository
-        </p>
-        <div className="flex flex-row gap-2">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
+      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
+        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
+          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
+        </h1>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
           <Link
-            href="/todo"
-            className="mx-auto w-fit rounded-md bg-gray-100 p-3 text-lg font-medium text-indigo-600 transition-all duration-200 hover:bg-gray-200 hover:text-indigo-800 active:scale-95"
+            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
+            href="https://create.t3.gg/en/usage/first-steps"
+            target="_blank"
           >
-            Sample GET Request
-          </Link>
-          <Link
-            href="/post"
-            className="mx-auto w-fit rounded-md bg-gray-100 p-3 text-lg font-medium text-indigo-600 transition-all duration-200 hover:bg-gray-200 hover:text-indigo-800 active:scale-95"
-          >
-            Sample POST Request
-          </Link>
-        </div>
-
-        <div className="mt-2">
-          <p className="text-lg font-semibold text-gray-700">
-            Shadcn is Initialised in this Repository
-          </p>
-          <p className="mt-4 text-gray-700">
-            Custom toast hook is created. You can use it by importing{" "}
-            <code className="rounded bg-gray-100 p-1">useToast</code> from{" "}
-            <code className="rounded bg-gray-100 p-1">
-              &quot;@/lib/toast.tsx&quot;
-            </code>{" "}
-            and then calling the create method with message and type as
-            arguments.
-          </p>
-          <div className="mt-4 text-gray-700">
-            <p>Example: </p>
-            <div className="rounded-md bg-gray-100 p-2 text-left">
-              <p>
-                <span className="text-blue-600">const</span>{" "}
-                <span className="text-green-600">toast</span> ={" "}
-                <span className="text-blue-600">useToast</span>();
-              </p>
-              <p>
-                <span className="text-green-600">toast</span>.
-                <span className="text-blue-600">create</span>(
-                <span className="text-red-600">&quot;Hello World&quot;</span>,{" "}
-                <span className="text-red-600">&quot;success&quot;</span>);
-              </p>
+            <h3 className="text-2xl font-bold">First Steps →</h3>
+            <div className="text-lg">
+              Just the basics - Everything you need to know to set up your
+              database and authentication.
             </div>
-          </div>
-          <p className="mt-4 text-gray-700">
-            There are 3 variants configured:{" "}
-            <span className="font-bold">success</span>,{" "}
-            <span className="font-bold">error</span>, and{" "}
-            <span className="font-bold">info</span>.
-          </p>
-          <p className="mt-4 text-gray-700">
-            You can add more in{" "}
-            <code className="rounded bg-gray-100 p-1">toast.tsx</code> file
-          </p>
+          </Link>
+          <Link
+            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
+            href="https://create.t3.gg/en/introduction"
+            target="_blank"
+          >
+            <h3 className="text-2xl font-bold">Documentation →</h3>
+            <div className="text-lg">
+              Learn more about Create T3 App, the libraries it uses, and how to
+              deploy it.
+            </div>
+          </Link>
         </div>
       </div>
     </main>
