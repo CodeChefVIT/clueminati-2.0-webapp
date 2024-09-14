@@ -1,6 +1,6 @@
 "use client";
-import React, { FC, useState, useEffect } from "react";
-import { useDrag } from "@use-gesture/react";
+import React, { FC, useState } from "react";
+import { useDrag } from '@use-gesture/react';
 import { icons } from "./icons";
 
 interface Team {
@@ -25,67 +25,57 @@ const teams: Team[] = [
 ];
 
 const Leaderboard: FC = () => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExp, setisExp] = useState(false);
   const [position, setPosition] = useState(0);
-  const [height, setHeight] = useState(0);
-
-  // Only access window when rendering on the client
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setHeight(window.innerHeight);
-    }
-  }, []);
-
   const bind = useDrag(
-    ({ movement: [, my], memo = position, direction: [, yDir], distance: [, yDist], last, touches }) => {
+    ({ movement: [, my], memo = position, direction: [, yDir], distance: [, yDist], last }) => {
       if (last) {
-        // If the distance of drag is greater than 50px, trigger expansion/collapse
         if (yDist > 50) {
-          setIsExpanded(yDir < 0); // Swipe up expands, swipe down collapses
+          setisExp(yDir > 0 ? false : true);
         }
-        setPosition(0); // Reset position after swipe ends
       } else {
-        setPosition(my + memo); // Track the movement while dragging
+        setPosition(my + memo);
       }
       return memo;
     },
-    { axis: "y", bounds: { top: -height / 2, bottom: 0 }, filterTaps: true } // Restrict drag area, filter taps
+    { axis: 'y' }
   );
 
   return (
-    <div
-      {...bind()}
-      style={{
-        transform: `translateY(${isExpanded ? "0" : "calc(100% - 50px)"})`,
-        transition: "transform 0.5s ease-in-out",
-        touchAction: "none", // Prevents the default touch action to better capture swipe gestures
-      }}
-      className="leaderboard-container"
-    >
-      <div className="p-4 text-center text-white">
-        <h2>Swipe up to expand the leaderboard</h2>
-      </div>
-      {teams.map((team) => (
-        <div
-          key={team.rank}
-          className={`flex items-center justify-between p-4 mb-2 rounded-lg ${team.color}`}
-        >
-          <div className="flex items-center">
-            <span className="text-7xl font-bold text-black mr-4">{team.rank}</span>
-            <div>
-              <div className="text-3xl font-semibold font-poppins text-[#232530]">
-                {team.name}
+    <div className="min-h-screen bg-gray-900 text-white">
+      <header className="flex items-center justify-between p-4 bg-gray-800">
+        <h1 className="text-xl font-bold">Leaderboard</h1>
+      </header>
+
+      <main
+        {...bind()}
+        className={`transition-transform duration-500 ease-in-out ${
+          isExp ? "translate-y-0" : "translate-y-full"}`}>
+            
+        <div className="px-4 sm:px-6 md:px-8 lg:px-10"> 
+          {teams.map((team) => (
+            <div
+              key={team.rank} 
+              className={`flex items-center justify-between py-3 mb-2 rounded-lg ${team.color} max-w-3xl mx-auto`}>
+              
+              <div className="flex items-center">
+                <span className="text-4xl font-bold text-black mr-4 md:text-5xl">{team.rank}</span>
+               
+                <div>
+                  <div className="text-lg font-semibold text-poppins text-[#232530] md:text-2xl">{team.name}</div>
+                  <div className="text-xs font-poppins text-[#232530] opacity-60 md:text-sm">{team.tier}</div>
+                </div>
+                
               </div>
-              <div className="text-sm font-poppins text-[#232530] opacity-60">
-                {team.tier}
+              
+              <div className="text-3xl md:text-4xl">
+                <img src={icons[team.icon]} alt={team.icon} className="w-8 h-8 md:w-10 md:h-10" />
               </div>
+
             </div>
-          </div>
-          <div className="text-4xl">
-            <img src={icons[team.icon]} alt={team.icon} className="w-10 h-10" />
-          </div>
+          ))}
         </div>
-      ))}
+      </main>
     </div>
   );
 };
