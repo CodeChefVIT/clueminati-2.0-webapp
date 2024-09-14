@@ -1,0 +1,3 @@
+Rank 10 nahi hai. Change it to chef logo. + icons not visible 
+Also check and change the font
+tier ke text ka colour change
