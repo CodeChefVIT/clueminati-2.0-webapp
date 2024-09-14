@@ -45,6 +45,7 @@ export async function POST(req: NextRequest) {
         email: data.email,
         password: hashedPassword,
         name: data.name,
+        role: "admin",
       })
       .returning();
   } catch (e) {
@@ -62,6 +63,7 @@ export async function POST(req: NextRequest) {
         );
       }
     }
+
     return NextResponse.json(
       { message: "Something went wrong" },
       { status: 500 },
