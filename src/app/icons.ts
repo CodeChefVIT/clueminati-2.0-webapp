@@ -3,5 +3,5 @@ export const icons = {
     silver: "/rank-icons/silver.svg",
     golden: "/rank-icons/golden.svg",
     diamond: "/rank-icons/diamond.svg",
-    // chef :"/chef.svg"
+    chef :"/chef.svg"
   };
