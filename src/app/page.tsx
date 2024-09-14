@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import Leaderboard from "./leaderboard";
-import Blank from "./blank";
+import Leaderboard from "../components/leaderboard";
+import Blank from "../components/dashboard";
 
 export default function Home() {
   const [showLeaderboard, setShowLeaderboard] = useState(false);

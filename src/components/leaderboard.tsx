@@ -1,6 +1,8 @@
 "use client";
 import React, { FC } from "react";
-import { icons } from "./icons";
+import { icons } from "../assets/icons";
+import { Button } from "@/components/ui/button"
+import { X } from "lucide-react";
 
 interface Team {
   rank: number;
@@ -38,11 +40,14 @@ const Leaderboard: FC<LeaderboardProps> = ({ show, toggleLeaderboard }) => {
         
         <div className="flex justify-between items-center p-4">
           <h2 className="text-2xl text-white font-semibold">Leaderboard</h2>
-          <button
+          <Button
+            size="icon"
+            variant="ghost"
             onClick={toggleLeaderboard}
-            className="text-white text-2xl font-semibold">
-            &times;
-          </button>
+            className="text-white">
+            <X />
+          </Button>
+
         </div>
         
         <div className="px-4 sm:px-6 md:px-8 lg:px-10 max-h-[75%] overflow-y-auto">
