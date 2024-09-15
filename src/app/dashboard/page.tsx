@@ -1,6 +1,5 @@
 import React from 'react';
 import TeamInfo from '@/components/teaminfo';
-import ProgressBar from './progressbar';
 import LeaderboardItem from '@/components/leaderboarditem';
 import myImage from "@/assets/images/boxes.svg";
 import green from "@/assets/images/green_icon.svg";
@@ -18,7 +17,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
 
   return (
     <main className="flex overflow-hidden flex-col items-center px-6 pt-12 pb-64 mx-auto w-full bg-white max-w-[480px]">
-      <h1 className="text-3xl font-bold text-black" style={{ textAlign: 'center' }}>Dashboard</h1>
+      <h1 className="text-3xl font-bold text-black">Dashboard</h1>
       <TeamInfo />
       
       <section className="flex flex-col items-center mt-20 text-zinc-800">
