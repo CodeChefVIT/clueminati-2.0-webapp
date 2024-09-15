@@ -1,5 +1,5 @@
 import React from 'react';
-import ProgressBar from './progressbar';
+import ProgressBar from '@/app/dashboard/progressbar';
 import icon1 from "@/assets/images/ico1.svg"
 import icon2 from "@/assets/images/ico2.svg"
 import circ from "@/assets/images/circle.svg"
@@ -23,7 +23,7 @@ const TeamInfo: React.FC<TeamInfoProps> = () => {
         </div>
       </div>
       <div className="flex flex-col px-3 w-full">
-        <ProgressBar progress={57} />
+        <ProgressBar />
         <div className="flex gap-2 mt-2.5 text-xs font-medium text-zinc-800">
           <div className="flex flex-auto gap-1">
             <Image

@@ -1,22 +1,15 @@
-import React from 'react';
-
-interface ProgressBarProps {
-  progress: number;
+import * as React from "react"
+ 
+import { Progress } from "@/components/ui/progress"
+ 
+export function ProgressDemo() {
+  const [progress, setProgress] = React.useState(13)
+ 
+  React.useEffect(() => {
+    const timer = setTimeout(() => setProgress(66), 500)
+    return () => clearTimeout(timer)
+  }, [])
+ 
+  return <Progress value={progress} className="w-[60%]" />
 }
-
-const ProgressBar: React.FC<ProgressBarProps> = ({ progress }) => {
-  return (
-    <div className="flex flex-col items-start mr-2.5 max-w-full bg-white rounded w-[400px]">
-      <div
-        className="flex shrink-0 h-1.5 rounded bg-zinc-800"
-        style={{ width: `${progress}%` }}
-        role="progressbar"
-        aria-valuenow={progress}
-        aria-valuemin={0}
-        aria-valuemax={100}
-      />
-    </div>
-  );
-};
-
-export default ProgressBar;
+export default Progress;
