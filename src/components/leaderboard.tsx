@@ -60,15 +60,15 @@ const Leaderboard: FC<LeaderboardProps> = ({ show, toggleLeaderboard }) => {
                 {team.rank === 10 ? (
                  <Image src={icons.chef} alt="chef" width={60} height={60} className="w-12 h-12 md:w-14 md:h-14 mr-3 ml-3" />
                 ) : (
-                  <span className="text-4xl font-bold text-black mr-4 ml-4 md:text-5xl">{team.rank}</span>
+                  <span className="text-4xl font-bold text-leaderboardBg mr-4 ml-4 md:text-5xl">{team.rank}</span>
                 )}
                 
                 <div>
-                  <div className="text-lg font-semibold text-poppins text-[bg-leaderboardBg] md:text-2xl">
+                  <div className="text-lg font-semibold text-poppins text-leaderboardBg md:text-2xl">
                     {team.name}
                   </div>
                   
-                  <div className="text-xs font-poppins text-[bg-leaderboardBg] opacity-60 md:text-sm">
+                  <div className="text-xs font-poppins text-leaderboardBg opacity-60 md:text-sm">
                     {team.tier}
                   </div>
                 </div>
