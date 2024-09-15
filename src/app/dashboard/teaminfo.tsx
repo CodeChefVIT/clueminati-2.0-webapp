@@ -8,8 +8,8 @@ interface TeamInfoProps {}
 
 const TeamInfo: React.FC<TeamInfoProps> = () => {
   return (
-    <section className="flex flex-col self-stretch pb-2.5 mt-3 w-full bg-amber-200 rounded-2xl">
-      <div className="flex self-start text-base font-medium text-zinc-800">
+    <section className="flex flex-col self-stretch pb-2.5 mt-3 w-full custom-yellow rounded-2xl">
+      <div className="flex self-start text-base font-medium">
         <Image
           loading="lazy"
           src={circ}
@@ -17,9 +17,9 @@ const TeamInfo: React.FC<TeamInfoProps> = () => {
           className="object-contain shrink-0 aspect-square shadow-[0px_1px_24px_rgba(216,229,237,0.18)] w-[130px]"
         />
         <div className="flex flex-col items-start my-auto">
-          <h2 className="self-stretch font-bold text-xl">Team Name</h2>
-          <p className="">400 Points</p>
-          <p className="mt-1 text-xs">Bronze Tier</p>
+          <h2 className="self-stretch font-bold text-xl text-black">Team Name</h2>
+          <p className="text-black">400 Points</p>
+          <p className="mt-1 text-xs  text-zinc-600">Bronze Tier</p>
         </div>
       </div>
       <div className="flex flex-col px-3 w-full">
