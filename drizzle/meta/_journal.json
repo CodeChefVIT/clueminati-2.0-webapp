@@ -5,8 +5,22 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1726237444796,
-      "tag": "0000_careless_daredevil",
+      "when": 1726325399881,
+      "tag": "0000_yummy_piledriver",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1726325643913,
+      "tag": "0001_dark_forgotten_one",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1726342076497,
+      "tag": "0002_slim_kinsey_walden",
       "breakpoints": true
     }
   ]

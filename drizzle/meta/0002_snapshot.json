@@ -1,6 +1,6 @@
 {
-  "id": "0f9acdda-c645-4742-91ed-18da1edfb25f",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "a705e280-576c-4897-95dc-fd1ad3b108fb",
+  "prevId": "c65a735b-ad43-40ee-a86e-318007b576ab",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -49,7 +49,7 @@
           "columnsTo": [
             "email"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -114,6 +114,13 @@
           "primaryKey": false,
           "notNull": false,
           "default": 0
+        },
+        "solved": {
+          "name": "solved",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'{}'::text[]"
         },
         "created_at": {
           "name": "created_at",
