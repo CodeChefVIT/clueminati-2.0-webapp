@@ -7,6 +7,7 @@ import {
   integer,
   pgEnum,
   pgTableCreator,
+  primaryKey,
   serial,
   text,
   timestamp,
@@ -33,7 +34,6 @@ export const users = createTable(
     password: varchar("password", { length: 256 }).notNull(),
     role: roleEnum("role").notNull().default("user"),
     teamId: integer("team_id").references(() => teams.id),
-    token: varchar("token", { length: 256 }),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -65,6 +65,9 @@ export const teams = createTable(
       .default(sql`'{}'::text[]`),
     userCount: integer("user_count").default(0),
     score: integer("score").default(0),
+    solved: text("solved")
+      .array()
+      .default(sql`'{}'::text[]`),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -74,10 +77,33 @@ export const teams = createTable(
   },
   (example) => ({
     idIdx: index("teams_id_idx").on(example.id),
-    nameIdx: index("teams_name_idx").on(example.name),
+    codeIdx: index("teams_team_code_idx").on(example.teamCode),
+    scoreIdx: index("teams_score_idx").on(example.score),
   }),
 );
 
 export const teamsRelations = relations(teams, ({ many }) => ({
   users: many(users),
+}));
+
+export const sessions = createTable(
+  "sessions",
+  {
+    token: varchar("token", { length: 256 }),
+    userId: varchar("user_id", { length: 256 })
+      .notNull()
+      .unique()
+      .references(() => users.email, { onDelete: "cascade" }),
+  },
+  (example) => ({
+    pk: primaryKey({ columns: [example.token, example.userId] }),
+    tokenIdx: index("sessions_token_idx").on(example.token),
+  }),
+);
+
+export const sessionsRelations = relations(sessions, ({ one }) => ({
+  user: one(users, {
+    fields: [sessions.userId],
+    references: [users.email],
+  }),
 }));
