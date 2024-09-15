@@ -21,7 +21,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
       <h1 className="text-3xl font-bold text-black" style={{ textAlign: 'center' }}>Dashboard</h1>
       <TeamInfo />
       
-      <section className="flex flex-col items-center mt-11 text-zinc-800">
+      <section className="flex flex-col items-center mt-20 text-zinc-800">
         <div className="flex">
           {leaderboardData.map((item, index) => (
             <LeaderboardItem key={index} {...item} />
