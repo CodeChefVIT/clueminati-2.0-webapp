@@ -1,14 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import the CSS file for Toastify
 import { z } from "zod";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';  // Import the CSS file for Toastify
 
 // Validation schema using Zod
 const loginSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
-  password: z.string().min(6, { message: "Password must be at least 6 characters long" }),
+  password: z
+    .string()
+    .min(6, { message: "Password must be at least 6 characters long" }),
 });
 
 export default function LoginPage() {
@@ -22,16 +24,16 @@ export default function LoginPage() {
     if (!result.success) {
       const formErrors = result.error.format();
       if (formErrors.email?._errors[0]) {
-        toast.error(formErrors.email._errors[0]);  // Show email error toast
+        toast.error(formErrors.email._errors[0]); // Show email error toast
       }
       if (formErrors.password?._errors[0]) {
-        toast.error(formErrors.password._errors[0]);  // Show password error toast
+        toast.error(formErrors.password._errors[0]); // Show password error toast
       }
-      return;  // Exit on error
+      return; // Exit on error
     }
 
     // If validation passes
-    toast.success("Login successful!");  // Show success toast
+    toast.success("Login successful!"); // Show success toast
     console.log("Login Successful", { email, password });
   };
 
@@ -45,7 +47,6 @@ export default function LoginPage() {
         </h1>
         
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-          
           {/* VIT Mail Input */}
           <div className="flex flex-col mb-4">
             <label htmlFor="email" className="text-sm font-semibold text-black mb-1">

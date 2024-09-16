@@ -5,27 +5,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@400;600&display=swap');
 
 
-.custom-yellow {
-  background-color: #FFDE72;
-}
-
-.custom-blue {
-  background-color: #88DBF9;
-}
-
-.custom-green {
-  background-color: #AEF276;
-}
-
-.custom-orange {
-  background-color: #FF9C67;
-}
-
-
-.leaderboard-bg {
-  background-color: #232530;
-}
-
 .leaderboard-slide {
   transition: transform 0.5s ease-in-out;
   transform: translateY(100%); 

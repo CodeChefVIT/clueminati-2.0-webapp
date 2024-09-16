@@ -19,6 +19,7 @@ export default {
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
+			
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
@@ -56,7 +57,12 @@ export default {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
-  			}
+  			},
+			  customYellow: '#FFDE72',
+			  customBlue: '#88DBF9',
+			  customGreen: '#AEF276',
+			  customOrange: '#FF9C67',
+			  leaderboardBg: '#232530'
   		}
   	}
   },

@@ -41,7 +41,9 @@ export default function Home() {
 
     if (isTeamCreated) {
       // Notify team creation
-      toast.success(`Team Created! Name: ${data.teamName}, Code: ${data.teamCode}`);
+      toast.success(
+        `Team Created! Name: ${data.teamName}, Code: ${data.teamCode}`,
+      );
     } else {
       // Notify team joining
       toast.success(`You have joined the team with code: ${data.teamCode}`);
@@ -49,8 +51,8 @@ export default function Home() {
   };
 
   const handleCopyToClipboard = () => {
-    navigator.clipboard.writeText(teamCode);
-    toast.success('Team code copied to clipboard!');
+    void navigator.clipboard.writeText(teamCode);
+    toast.success("Team code copied to clipboard!");
   };
 
   return (
