@@ -1,0 +1,1 @@
+ALTER TABLE "clueminati-2.0-web_users" DROP COLUMN IF EXISTS "session";
