@@ -20,7 +20,7 @@ const LeaderboardItem: React.FC<LeaderboardItemProps> = ({ rank, name, imageUrl 
           height={56}              // Set explicit height
           className="flex object-contain self-center w-14 aspect-square"
         />
-        <p className="mt-1">{name}</p>
+        <p className="mt-1 pl-5">{name}</p>
       </div>
     </div>
   );
