@@ -8,9 +8,9 @@ import {
   pgEnum,
   pgTableCreator,
   primaryKey,
-  serial,
   text,
   timestamp,
+  uuid,
   varchar,
 } from "drizzle-orm/pg-core";
 
@@ -33,7 +33,7 @@ export const users = createTable(
     email: varchar("email", { length: 256 }).primaryKey(),
     password: varchar("password", { length: 256 }).notNull(),
     role: roleEnum("role").notNull().default("user"),
-    teamId: integer("team_id").references(() => teams.id),
+    teamId: uuid("team_id").references(() => teams.id),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -56,7 +56,7 @@ export const usersRelations = relations(users, ({ one }) => ({
 export const teams = createTable(
   "teams",
   {
-    id: serial("id").primaryKey(),
+    id: uuid("id").defaultRandom().primaryKey(),
     name: varchar("name", { length: 256 }).notNull().unique(),
     teamCode: varchar("team_code", { length: 6 }).notNull().unique(),
     userIds: text("user_ids")

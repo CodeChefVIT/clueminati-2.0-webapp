@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 
 export function getVerfiyJWT() {
   let email;
+  let role;
   try {
     const authHeader = headers().get("Authorization");
     if (!authHeader) {
@@ -14,8 +15,13 @@ export function getVerfiyJWT() {
     }
 
     const payload = verifyJWT(token);
-    if (typeof payload !== "string" && Object.keys(payload).includes("email")) {
+    if (
+      typeof payload !== "string" &&
+      Object.keys(payload).includes("email") &&
+      Object.keys(payload).includes("role")
+    ) {
       email = payload.email as string;
+      role = payload.role as string;
     } else {
       throw new Error("Invalid payload");
     }
@@ -23,5 +29,5 @@ export function getVerfiyJWT() {
     return false;
   }
 
-  return email;
+  return { email, role };
 }

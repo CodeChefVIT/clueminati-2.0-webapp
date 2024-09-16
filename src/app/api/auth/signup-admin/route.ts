@@ -6,13 +6,6 @@ import { type NextRequest, NextResponse } from "next/server";
 import { type PostgresError } from "postgres";
 
 export async function POST(req: NextRequest) {
-  if (!(req.method === "POST")) {
-    return NextResponse.json(
-      { message: "Method not allowed" },
-      { status: 405 },
-    );
-  }
-
   let data;
   try {
     data = (await req.json()) as signupProps;
@@ -39,15 +32,12 @@ export async function POST(req: NextRequest) {
 
   try {
     const hashedPassword = hashPassword(data.password);
-    await db
-      .insert(users)
-      .values({
-        email: data.email,
-        password: hashedPassword,
-        name: data.name,
-        role: "admin",
-      })
-      .returning();
+    await db.insert(users).values({
+      email: data.email,
+      password: hashedPassword,
+      name: data.name,
+      role: "admin",
+    });
   } catch (e) {
     if (e instanceof Error && e.name === "PostgresError") {
       const err = e as PostgresError;
