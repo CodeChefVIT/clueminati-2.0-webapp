@@ -9,7 +9,7 @@ export async function GET(
   req: Request,
   { params }: { params: { id: string } },
 ) {
-  const token = getVerfiyJWT();
+  const token = await getVerfiyJWT();
   if (!token) {
     return NextResponse.json({ message: "Not logged in" }, { status: 401 });
   }

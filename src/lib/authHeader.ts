@@ -1,7 +1,10 @@
+import { db } from "@/server/db";
+import { sessions } from "@/server/db/schema";
 import { verifyJWT } from "@/utils/jwt";
+import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 
-export function getVerfiyJWT() {
+export async function getVerfiyJWT() {
   let email;
   let role;
   try {
@@ -14,6 +17,15 @@ export function getVerfiyJWT() {
       throw new Error("No token found");
     }
 
+    const [session] = await db
+      .select()
+      .from(sessions)
+      .where(eq(sessions.token, token));
+
+    if (!session) {
+      throw new Error("No session found");
+    }
+
     const payload = verifyJWT(token);
     if (
       typeof payload !== "string" &&
@@ -24,6 +36,10 @@ export function getVerfiyJWT() {
       role = payload.role as string;
     } else {
       throw new Error("Invalid payload");
+    }
+
+    if (session.userId !== email) {
+      throw new Error("Email does not match");
     }
   } catch {
     return false;

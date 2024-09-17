@@ -5,7 +5,7 @@ import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function POST() {
-  const token = getVerfiyJWT();
+  const token = await getVerfiyJWT();
   if (!token) {
     return NextResponse.json({ message: "Not logged in" }, { status: 401 });
   }

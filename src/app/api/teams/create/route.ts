@@ -8,7 +8,7 @@ import { type PostgresError } from "postgres";
 import { type createTeamProps } from "@/types/api/team";
 
 export async function POST(req: NextRequest) {
-  const token = getVerfiyJWT();
+  const token = await getVerfiyJWT();
   if (!token) {
     return NextResponse.json({ message: "Not logged in" }, { status: 401 });
   }

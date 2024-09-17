@@ -6,7 +6,7 @@ import { type updateScoreProps } from "@/types/api/auth";
 import { getVerfiyJWT } from "@/lib/authHeader";
 
 export async function POST(req: NextRequest) {
-  const token = getVerfiyJWT();
+  const token = await getVerfiyJWT();
   if (!token) {
     return NextResponse.json({ message: "Not logged in" }, { status: 401 });
   }

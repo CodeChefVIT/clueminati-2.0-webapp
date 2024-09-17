@@ -8,7 +8,7 @@ import { getVerfiyJWT } from "@/lib/authHeader";
 import { getTiers } from "@/lib/tiers";
 
 export async function GET() {
-  const token = getVerfiyJWT();
+  const token = await getVerfiyJWT();
   if (!token) {
     return NextResponse.json({ message: "Not logged in" }, { status: 401 });
   }
