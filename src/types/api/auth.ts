@@ -8,5 +8,11 @@ export interface signupProps {
 export interface updateProps {
   name: string | undefined;
   password: string | undefined;
+}
+
+export interface updateScoreProps {
+  teamCode: string;
+  questionId: string;
+  points: number;
   key: string;
 }

@@ -1,26 +1,24 @@
-import React from 'react';
-import TeamInfo from '@/components/teaminfo';
-import LeaderboardItem from '@/components/leaderboarditem';
+import blue from "@/assets/images/blue_icon.svg";
 import myImage from "@/assets/images/boxes.svg";
 import green from "@/assets/images/green_icon.svg";
-import blue from "@/assets/images/blue_icon.svg";
 import orange from "@/assets/images/orange_icon.svg";
+import LeaderboardItem from "@/components/leaderboarditem";
+import TeamInfo from "@/components/teaminfo";
 import Image from "next/image";
-interface DashboardProps {}
 
-const Dashboard: React.FC<DashboardProps> = () => {
+const Dashboard = () => {
   const leaderboardData = [
-    { rank: 2, name: 'Team Name', imageUrl: green },
-    { rank: 1, name: 'Team Name', imageUrl: blue},
-    { rank: 3, name: 'Team Name', imageUrl: orange},
+    { rank: 2, name: "Team Name", imageUrl: green as HTMLImageElement },
+    { rank: 1, name: "Team Name", imageUrl: blue as HTMLImageElement },
+    { rank: 3, name: "Team Name", imageUrl: orange as HTMLImageElement },
   ];
 
   return (
-    <main className="flex overflow-hidden flex-col items-center px-6 pt-12 pb-64 mx-auto w-full bg-white max-w-[480px]">
+    <main className="mx-auto flex w-full max-w-[480px] flex-col items-center overflow-hidden bg-white px-6 pb-64 pt-12">
       <h1 className="text-3xl font-bold text-black">Dashboard</h1>
       <TeamInfo />
-      
-      <section className="flex flex-col items-center mt-20 text-zinc-800">
+
+      <section className="mt-20 flex flex-col items-center text-zinc-800">
         <div className="flex">
           {leaderboardData.map((item, index) => (
             <LeaderboardItem key={index} {...item} />
@@ -29,9 +27,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
         <div className="mt-6">
           <Image
             loading="lazy"
-            src={myImage}
+            src={myImage as HTMLImageElement}
             alt="Team Image"
-            className="object-contain shrink-0 w-[400px]"
+            className="w-[400px] shrink-0 object-contain"
           />
         </div>
       </section>

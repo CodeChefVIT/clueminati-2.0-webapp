@@ -7,7 +7,8 @@ import Image from "next/image";
 
 const TeamInfo = () => {
   return (
-    <section className="flex flex-col self-stretch pb-2.5 mt-3 w-full bg-customYellow rounded-2xl custom-yellow">
+    <section className="flex flex-col self-stretch pb-2.5 mt-3 w-full bg-customYellow rounded-2xl">
+
       <div className="flex self-start text-base font-medium">
         <Image
           src={circ as HTMLImageElement}
@@ -28,12 +29,14 @@ const TeamInfo = () => {
         <Progress />
         <div className="flex justify-between mt-2.5 text-xs font-medium text-zinc-800 w-full">
           <div className="flex gap-2 items-center">
+
             <Image
               src={icon1 as HTMLImageElement}
               alt=""
               height={1000}
               width={1000}
               className="object-contain shrink-0 aspect-square w-[40px] sm:w-[61px]"
+
             />
             <p>
               Minimum requirement for silver tier currently is 600 points

@@ -7,8 +7,8 @@ import { eq } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(req: NextRequest) {
-  const email = getVerfiyJWT();
-  if (!email) {
+  const token = await getVerfiyJWT();
+  if (!token) {
     return NextResponse.json({ message: "Not logged in" }, { status: 401 });
   }
 
@@ -27,10 +27,6 @@ export async function PATCH(req: NextRequest) {
 
   if (!data.name && !data.password) {
     return NextResponse.json({ message: "Invalid data" }, { status: 400 });
-  }
-
-  if (data.key !== process.env.SIGNUP_KEY) {
-    return NextResponse.json({ message: "Sneaky mfker!" }, { status: 403 });
   }
 
   if (data.password?.length === 0) {
@@ -52,7 +48,7 @@ export async function PATCH(req: NextRequest) {
     [user] = await db
       .update(users)
       .set({ name: data.name, password: hashedPassword })
-      .where(eq(users.email, email))
+      .where(eq(users.email, token.email))
       .returning({ email: users.email, name: users.name });
   } catch {
     NextResponse.json({ message: "Something went wrong" }, { status: 500 });
