@@ -72,6 +72,8 @@ const ProfilePage = () => {
           toast.error("Not logged in");
         } else if (error.response?.status === 500) {
           toast.error("Something went wrong");
+        } else if (error.response?.status === 429) {
+          toast.error("Too many requests. Try again in 10 minutes.");
         }
       } else {
         toast.error("Unknown error occurred while updating profile");
@@ -133,7 +135,7 @@ const ProfilePage = () => {
 
             <button
               type="submit"
-              className="mt-4 w-full rounded-lg bg-[#FBB3C0] p-3 text-lg font-semibold text-white hover:bg-pink-400 focus:outline-none focus:ring-2 focus:ring-pink-600"
+              className="mt-4 w-full rounded-lg hover:bg-[#FBB3C0] p-3 text-lg font-semibold text-white bg-pink-400 focus:outline-none focus:ring-2 focus:ring-pink-600"
             >
               Update Profile
             </button>
