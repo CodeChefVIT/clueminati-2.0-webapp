@@ -1,12 +1,14 @@
-import circ from "@/assets/images/circle.svg";
+import React from 'react';
+import { Progress } from '@/components/ui/progress';
 import icon1 from "@/assets/images/ico1.svg";
 import icon2 from "@/assets/images/ico2.svg";
-import { Progress } from "@/components/ui/progress";
+import circ from "@/assets/images/circle.svg";
 import Image from "next/image";
 
 const TeamInfo = () => {
   return (
-    <section className="custom-yellow mt-3 flex w-full flex-col self-stretch rounded-2xl pb-2.5">
+    <section className="flex flex-col self-stretch pb-2.5 mt-3 w-full bg-customYellow rounded-2xl">
+
       <div className="flex self-start text-base font-medium">
         <Image
           src={circ as HTMLImageElement}
@@ -25,16 +27,18 @@ const TeamInfo = () => {
       </div>
       <div className="flex w-full flex-col px-3">
         <Progress />
-        <div className="mt-2.5 flex gap-2 text-xs font-medium text-zinc-800">
-          <div className="flex flex-auto gap-1">
+        <div className="flex justify-between mt-2.5 text-xs font-medium text-zinc-800 w-full">
+          <div className="flex gap-2 items-center">
+
             <Image
               src={icon1 as HTMLImageElement}
               alt=""
               height={1000}
               width={1000}
-              className="aspect-square w-[61px] shrink-0 object-contain"
+              className="object-contain shrink-0 aspect-square w-[40px] sm:w-[61px]"
+
             />
-            <p className="my-auto">
+            <p>
               Minimum requirement for silver tier currently is 600 points
             </p>
           </div>
@@ -43,7 +47,7 @@ const TeamInfo = () => {
             alt=""
             height={1000}
             width={1000}
-            className="w-18 my-auto aspect-square shrink-0 object-contain shadow-[0px_1px_13px_rgba(216,229,237,0.18)]"
+            className="object-contain shrink-0 aspect-square w-[50px] sm:w-[61px] shadow-[0px_1px_13px_rgba(216,229,237,0.18)]"
           />
         </div>
       </div>
