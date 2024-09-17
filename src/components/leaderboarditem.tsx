@@ -20,7 +20,7 @@ const LeaderboardItem: React.FC<LeaderboardItemProps> = ({ rank, name, imageUrl 
           height={56}
           className="object-contain w-14 aspect-square"
         />
-        <p className="mt-1">{name}</p>
+        <p className="mt-1 text-center">{name}</p>
       </div>
     </div>
   );
