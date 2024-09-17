@@ -1,4 +1,4 @@
-"use client"; // Needed for client-side fetching with hooks
+"use client"; 
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -14,7 +14,7 @@ interface LeaderboardData {
   id: number;
   name: string;
   score: number;
-  imageUrl: string; // Local or external image
+  imageUrl: string; 
 }
 
 interface TeamInfoData {
@@ -65,7 +65,7 @@ const Dashboard = () => {
     <main className="mx-auto flex w-full max-w-[480px] flex-col items-center overflow-hidden bg-white px-6 pb-64 pt-12">
       <h1 className="text-3xl font-bold text-black">Dashboard</h1>
 
-      {teamInfo && <TeamInfo teamInfo={teamInfo} />} {/* TeamInfo component with dynamic data */}
+      {teamInfo && <TeamInfo teamInfo={teamInfo} />} 
 
       <section className="mt-20 flex flex-col items-center text-zinc-800">
         <div className="flex">

@@ -4,7 +4,7 @@ import Image, { StaticImageData } from 'next/image';
 interface LeaderboardItemProps {
   rank: number;
   name: string;
-  imageUrl: StaticImageData | string; // Either local or remote image
+  imageUrl: StaticImageData | string; 
 }
 
 const LeaderboardItem: React.FC<LeaderboardItemProps> = ({ rank, name, imageUrl }) => {
@@ -20,7 +20,7 @@ const LeaderboardItem: React.FC<LeaderboardItemProps> = ({ rank, name, imageUrl 
           height={56}
           className="object-contain w-14 aspect-square"
         />
-        <p className="mt-1">{name}</p> {/* Displaying team name from props */}
+        <p className="mt-1">{name}</p>
       </div>
     </div>
   );
