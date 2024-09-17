@@ -18,7 +18,7 @@ export default function Home() {
       <div className="fixed bottom-0 w-full bg-gray-800 p-4 flex justify-center">
         <Button
           onClick={toggleLeaderboard}
-          className="bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-700">
+          className="bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-customBlue">
           {showLeaderboard ? "Hide Leaderboard" : "Show Leaderboard"}
         </Button>
       </div>
