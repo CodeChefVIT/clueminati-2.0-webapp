@@ -12,12 +12,13 @@ CREATE TABLE IF NOT EXISTS "clueminati-2.0-web_sessions" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "clueminati-2.0-web_teams" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" varchar(256) NOT NULL,
 	"team_code" varchar(6) NOT NULL,
 	"user_ids" text[] DEFAULT '{}'::text[] NOT NULL,
 	"user_count" integer DEFAULT 0,
 	"score" integer DEFAULT 0,
+	"solved" text[] DEFAULT '{}'::text[],
 	"created_at" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	"updated_at" timestamp with time zone,
 	CONSTRAINT "clueminati-2.0-web_teams_name_unique" UNIQUE("name"),
@@ -29,14 +30,13 @@ CREATE TABLE IF NOT EXISTS "clueminati-2.0-web_users" (
 	"email" varchar(256) PRIMARY KEY NOT NULL,
 	"password" varchar(256) NOT NULL,
 	"role" "role" DEFAULT 'user' NOT NULL,
-	"team_id" integer,
-	"session" varchar(256),
+	"team_id" uuid,
 	"created_at" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	"updated_at" timestamp with time zone
 );
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "clueminati-2.0-web_sessions" ADD CONSTRAINT "clueminati-2.0-web_sessions_user_id_clueminati-2.0-web_users_email_fk" FOREIGN KEY ("user_id") REFERENCES "public"."clueminati-2.0-web_users"("email") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "clueminati-2.0-web_sessions" ADD CONSTRAINT "clueminati-2.0-web_sessions_user_id_clueminati-2.0-web_users_email_fk" FOREIGN KEY ("user_id") REFERENCES "public"."clueminati-2.0-web_users"("email") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
