@@ -2,15 +2,13 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { type UserData, type ApiResponse } from "@/types/client/profile";
 
-
-function ProfilePage() {
+const ProfilePage = () => {
   const [user, setUser] = useState<UserData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
-
   const [name, setName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -27,9 +25,9 @@ function ProfilePage() {
         setName(response.data.data.name);
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          setError("Failed to fetch user data");
+          toast.error("Failed to fetch user data");
         } else {
-          setError("Unknown error");
+          toast.error("Unknown error occurred while fetching user data");
         }
       } finally {
         setLoading(false);
@@ -41,11 +39,9 @@ function ProfilePage() {
 
   const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(null);
-    setSuccess(null);
 
     if (!name && !password) {
-      setError("Please provide either name or password.");
+      toast.error("Please provide either name or password.");
       return;
     }
 
@@ -66,19 +62,19 @@ function ProfilePage() {
         },
       );
 
-      setSuccess(response.data.message);
+      toast.success(response.data.message);
       setUser(response.data.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 400) {
-          setError("Invalid data");
+          toast.error("Invalid data");
         } else if (error.response?.status === 401) {
-          setError("Not logged in");
+          toast.error("Not logged in");
         } else if (error.response?.status === 500) {
-          setError("Something went wrong");
+          toast.error("Something went wrong");
         }
       } else {
-        setError("Unknown error");
+        toast.error("Unknown error occurred while updating profile");
       }
     }
   };
@@ -89,10 +85,6 @@ function ProfilePage() {
         Loading...
       </div>
     );
-  }
-
-  if (error) {
-    return <div className="text-center text-red-500">Error: {error}</div>;
   }
 
   return (
@@ -107,51 +99,41 @@ function ProfilePage() {
             <strong>Email:</strong> {user.email}
           </p>
 
-          {success && (
-            <div className="mb-4 text-center text-green-500">{success}</div>
-          )}
-          {error && (
-            <div className="mb-4 text-center text-red-500">{error}</div>
-          )}
-
           <form onSubmit={handleUpdate} className="mt-6">
             <div className="mb-4">
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="name" className="text-sm font-bold text-black">
                 Name
               </label>
               <input
                 id="name"
                 type="text"
-                className="mt-1 w-full rounded border p-2"
+                placeholder="Update name"
+                className="mt-1 w-full rounded-lg border border-gray-300 p-3 text-lg focus:outline-none focus:ring-2 focus:ring-black"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Update name"
               />
             </div>
 
             <div className="mb-4">
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
+                className="text-sm font-bold text-black"
               >
                 Password
               </label>
               <input
                 id="password"
                 type="password"
-                className="mt-1 w-full rounded border p-2"
+                placeholder="Update password"
+                className="mt-1 w-full rounded-lg border border-gray-300 p-3 text-lg focus:outline-none focus:ring-2 focus:ring-black"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Update password"
               />
             </div>
 
             <button
               type="submit"
-              className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+              className="mt-4 w-full rounded-lg bg-[#FBB3C0] p-3 text-lg font-semibold text-white hover:bg-pink-400 focus:outline-none focus:ring-2 focus:ring-pink-600"
             >
               Update Profile
             </button>
@@ -189,8 +171,10 @@ function ProfilePage() {
       ) : (
         <p className="text-center text-gray-500">No user data available</p>
       )}
+
+      <ToastContainer />
     </div>
   );
-}
+};
 
 export default ProfilePage;
