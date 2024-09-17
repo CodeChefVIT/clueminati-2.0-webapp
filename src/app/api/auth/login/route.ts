@@ -34,7 +34,8 @@ export async function POST(req: NextRequest) {
   let user;
   try {
     [user] = await db.select().from(users).where(eq(users.email, data.email));
-  } catch {
+  } catch(e) {
+    console.log(e)
     return NextResponse.json(
       { message: "Something went wrong" },
       { status: 500 },
@@ -55,6 +56,7 @@ export async function POST(req: NextRequest) {
       .values({ token, userId: user.email })
       .onConflictDoUpdate({ target: [sessions.userId], set: { token } });
   } catch {
+    console.log("cd")
     return NextResponse.json(
       { message: "Something went wrong" },
       { status: 500 },
