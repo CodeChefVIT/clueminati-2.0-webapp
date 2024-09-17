@@ -1,10 +1,10 @@
-import React from 'react'; 
+import React from 'react';  
 import Image, { StaticImageData } from 'next/image';
 
 interface LeaderboardItemProps {
   rank: number;
   name: string;
-  imageUrl: StaticImageData;
+  imageUrl: StaticImageData | string; // Either local or remote image
 }
 
 const LeaderboardItem: React.FC<LeaderboardItemProps> = ({ rank, name, imageUrl }) => {
@@ -14,13 +14,13 @@ const LeaderboardItem: React.FC<LeaderboardItemProps> = ({ rank, name, imageUrl 
     <div className="flex flex-col items-center">
       <div className={`self-center flex flex-col items-center ${rankPadding}`}>
         <Image
-          src={imageUrl}
+          src={imageUrl as StaticImageData}
           alt={`${name} avatar`}
           width={56}
           height={56}
           className="object-contain w-14 aspect-square"
         />
-        <p className="mt-1">{name}</p>
+        <p className="mt-1">{name}</p> {/* Displaying team name from props */}
       </div>
     </div>
   );

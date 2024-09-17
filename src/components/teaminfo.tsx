@@ -1,13 +1,27 @@
-import React from 'react';
+import React from 'react'; 
 import { Progress } from '@/components/ui/progress';
 import icon1 from "@/assets/images/ico1.svg";
 import icon2 from "@/assets/images/ico2.svg";
 import circ from "@/assets/images/circle.svg";
 import Image from "next/image";
 
-const TeamInfo = () => {
+interface TeamInfoProps {
+  teamInfo: {
+    currentPoints: number;
+    currentTier: string;
+    pointsToNextTier: number;
+    nextTier: string;
+  };
+}
+
+const TeamInfo: React.FC<TeamInfoProps> = ({ teamInfo }) => {
+  const { currentPoints, currentTier, pointsToNextTier, nextTier } = teamInfo;
+  
+  // Calculate progress percentage based on points to next tier
+  const progressPercentage = (currentPoints / pointsToNextTier) * 100;
+
   return (
-    <section className="flex flex-col self-stretch pb-2.5 mt-3 w-full bg-customYellow rounded-2xl custom-yellow">
+    <section className="flex flex-col self-stretch pb-2.5 mt-3 w-full bg-customYellow rounded-2xl">
       <div className="flex self-start text-base font-medium">
         <Image
           src={circ as HTMLImageElement}
@@ -20,12 +34,13 @@ const TeamInfo = () => {
           <h2 className="self-stretch text-xl font-bold text-black">
             Team Name
           </h2>
-          <p className="text-black">400 Points</p>
-          <p className="mt-1 text-xs text-zinc-600">Bronze Tier</p>
+          <p className="text-black">{currentPoints} Points</p>
+          <p className="mt-1 text-xs text-zinc-600">{currentTier} Tier</p>
         </div>
       </div>
+
       <div className="flex w-full flex-col px-3">
-        <Progress />
+        <Progress value={progressPercentage} />
         <div className="flex justify-between mt-2.5 text-xs font-medium text-zinc-800 w-full">
           <div className="flex gap-2 items-center">
             <Image
@@ -36,7 +51,7 @@ const TeamInfo = () => {
               className="object-contain shrink-0 aspect-square w-[40px] sm:w-[61px]"
             />
             <p>
-              Minimum requirement for silver tier currently is 600 points
+              Minimum requirement for {nextTier} tier currently is {pointsToNextTier} points
             </p>
           </div>
           <Image
