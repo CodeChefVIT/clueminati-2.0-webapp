@@ -1,0 +1,15 @@
+{
+    "message": "Data fetched successfully",
+    "data": {
+      "topTeams": [
+        { "id": 1, "name": "Team Alpha", "score": 500 },
+        { "id": 2, "name": "Team Beta", "score": 450 },
+        { "id": 3, "name": "Team Gamma", "score": 400 }
+      ],
+      "score": 500,
+      "currentTier": "Bronze",
+      "nextTier": "Silver",
+      "pointsToNextTier": 100
+    }
+  }
+  

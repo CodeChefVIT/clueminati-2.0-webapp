@@ -7,7 +7,7 @@ import Image from "next/image";
 
 interface TeamInfoProps {
   teamInfo: {
-    currentPoints: number;
+    score: number;
     currentTier: string;
     pointsToNextTier: number;
     nextTier: string;
@@ -15,13 +15,13 @@ interface TeamInfoProps {
 }
 
 const TeamInfo: React.FC<TeamInfoProps> = ({ teamInfo }) => {
-  const { currentPoints, currentTier, pointsToNextTier, nextTier } = teamInfo;
-  
-  // Calculate progress percentage based on points to next tier
-  const progressPercentage = (currentPoints / pointsToNextTier) * 100;
+  const { score, currentTier, pointsToNextTier, nextTier } = teamInfo;
+
+  // Calculate progress percentage
+  const progressPercentage = (score / pointsToNextTier) * 100;
 
   return (
-    <section className="flex flex-col self-stretch pb-2.5 mt-3 w-full bg-customYellow rounded-2xl custom-yellow">
+    <section className="flex flex-col self-stretch pb-2.5 mt-3 w-full bg-customYellow rounded-2xl">
       <div className="flex self-start text-base font-medium">
         <Image
           src={circ as HTMLImageElement}
@@ -31,10 +31,8 @@ const TeamInfo: React.FC<TeamInfoProps> = ({ teamInfo }) => {
           className="aspect-square w-[130px] shrink-0 object-contain shadow-[0px_1px_24px_rgba(216,229,237,0.18)]"
         />
         <div className="my-auto flex flex-col items-start">
-          <h2 className="self-stretch text-xl font-bold text-black">
-            Team Name
-          </h2>
-          <p className="text-black">{currentPoints} Points</p>
+          <h2 className="self-stretch text-xl font-bold text-black">Team Name</h2>
+          <p className="text-black">{score} Points</p>
           <p className="mt-1 text-xs text-zinc-600">{currentTier} Tier</p>
         </div>
       </div>
@@ -43,18 +41,14 @@ const TeamInfo: React.FC<TeamInfoProps> = ({ teamInfo }) => {
         <Progress value={progressPercentage} />
         <div className="flex justify-between mt-2.5 text-xs font-medium text-zinc-800 w-full">
           <div className="flex gap-2 items-center">
-
             <Image
               src={icon1 as HTMLImageElement}
               alt=""
               height={1000}
               width={1000}
               className="object-contain shrink-0 aspect-square w-[40px] sm:w-[61px]"
-
             />
-            <p>
-              Minimum requirement for {nextTier} tier currently is {pointsToNextTier} points
-            </p>
+            <p>Minimum requirement for {nextTier} tier is {pointsToNextTier} points</p>
           </div>
           <Image
             src={icon2 as HTMLImageElement}

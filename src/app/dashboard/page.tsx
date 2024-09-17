@@ -1,4 +1,4 @@
-"use client"; // Required for client-side fetching
+"use client"; // Needed for client-side fetching with hooks
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -11,49 +11,66 @@ import TeamInfo from "@/components/teaminfo";
 import Image from "next/image";
 
 interface LeaderboardData {
-  rank: number;
+  id: number;
   name: string;
-  imageUrl: string; // URL of image
+  score: number;
+  imageUrl: string; // Local or external image
 }
 
-interface DashboardData {
-  currentPoints: number;
+interface TeamInfoData {
+  score: number;
   currentTier: string;
-  currentRank: number;
   pointsToNextTier: number;
   nextTier: string;
 }
 
 const Dashboard = () => {
   const [leaderboardData, setLeaderboardData] = useState<LeaderboardData[]>([]);
-  const [teamInfo, setTeamInfo] = useState<DashboardData | null>(null);
+  const [teamInfo, setTeamInfo] = useState<TeamInfoData | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchDashboardData = async () => {
       try {
-        const response = await axios.get("/api/dashboard"); // Replace with your backend API endpoint
-        const { leaderboard, teamInfo } = response.data;
+        const response = await axios.get("/dashboard.json");
+        const { topTeams, score, currentTier, nextTier, pointsToNextTier } = response.data.data;
+        const mappedLeaderboardData = topTeams.map((team: any, index: number) => ({
+          id: team.id,
+          name: team.name,
+          score: team.score,
+          imageUrl: index === 0 ? green : index === 1 ? blue : orange,
+        }));
 
-        setLeaderboardData(leaderboard); // Top 3 teams from backend
-        setTeamInfo(teamInfo);
+        setLeaderboardData(mappedLeaderboardData);
+        setTeamInfo({
+          score,
+          currentTier,
+          nextTier,
+          pointsToNextTier,
+        });
       } catch (error) {
-        console.error("Error fetching data:", error);
+        setError("Failed to load data. Please try again.");
+        console.error("Error fetching dashboard data:", error);
       }
     };
 
-    fetchData();
+    fetchDashboardData();
   }, []);
+
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <main className="mx-auto flex w-full max-w-[480px] flex-col items-center overflow-hidden bg-white px-6 pb-64 pt-12">
       <h1 className="text-3xl font-bold text-black">Dashboard</h1>
 
-      {teamInfo && <TeamInfo teamInfo={teamInfo} />}
+      {teamInfo && <TeamInfo teamInfo={teamInfo} />} {/* TeamInfo component with dynamic data */}
 
       <section className="mt-20 flex flex-col items-center text-zinc-800">
         <div className="flex">
           {leaderboardData.map((item, index) => (
-            <LeaderboardItem key={index} {...item} />
+            <LeaderboardItem key={index} rank={index + 1} {...item} />
           ))}
         </div>
         <div className="mt-6">
