@@ -1,29 +1,39 @@
 import { getVerfiyJWT } from "@/lib/authHeader";
 import { db } from "@/server/db";
-import { teams, users } from "@/server/db/schema";
+import { users } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const email = getVerfiyJWT();
-  if (!email) {
+  const token = await getVerfiyJWT();
+  if (!token) {
     return NextResponse.json({ message: "Not logged in" }, { status: 401 });
   }
 
   let user;
-  let team = null;
   try {
-    [user] = await db.select().from(users).where(eq(users.email, email));
+    user = await db.query.users.findFirst({
+      columns: { name: true, email: true, teamId: true },
+      with: {
+        team: {
+          with: {
+            users: {
+              columns: { name: true, email: true },
+            },
+          },
+          columns: {
+            name: true,
+            teamCode: true,
+            userCount: true,
+            score: true,
+          },
+        },
+      },
+      where: eq(users.email, token.email),
+    });
 
     if (!user) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
-    }
-
-    if (user.teamId) {
-      [team] = await db
-        .select({ name: teams.name })
-        .from(teams)
-        .where(eq(teams.id, user.teamId));
     }
   } catch {
     return NextResponse.json(
@@ -35,11 +45,7 @@ export async function GET() {
   return NextResponse.json(
     {
       message: "Data fetched successfully",
-      data: {
-        name: user.name,
-        email: user.email,
-        team: team,
-      },
+      data: user,
     },
     { status: 200 },
   );

@@ -1,5 +1,5 @@
 {
-  "id": "0f9acdda-c645-4742-91ed-18da1edfb25f",
+  "id": "524b49b2-1fff-41b1-9083-d72546723e3c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -49,7 +49,7 @@
           "columnsTo": [
             "email"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -78,9 +78,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "name": {
           "name": "name",
@@ -114,6 +115,13 @@
           "primaryKey": false,
           "notNull": false,
           "default": 0
+        },
+        "solved": {
+          "name": "solved",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'{}'::text[]"
         },
         "created_at": {
           "name": "created_at",
@@ -227,13 +235,7 @@
         },
         "team_id": {
           "name": "team_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "session": {
-          "name": "session",
-          "type": "varchar(256)",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": false
         },

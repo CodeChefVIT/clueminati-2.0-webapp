@@ -11,14 +11,18 @@ interface loginProps {
 }
 
 export async function POST(req: NextRequest) {
-  if (!(req.method === "POST")) {
+  let data;
+  try {
+    data = (await req.json()) as loginProps;
+  } catch (e) {
+    if (e instanceof SyntaxError) {
+      return NextResponse.json({ message: "Invalid data" }, { status: 400 });
+    }
     return NextResponse.json(
-      { message: "Method not allowed" },
-      { status: 405 },
+      { message: "Something went wrong" },
+      { status: 500 },
     );
   }
-
-  const data = (await req.json()) as loginProps;
 
   if (!data.email || !data.password) {
     return NextResponse.json(

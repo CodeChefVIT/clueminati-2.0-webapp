@@ -5,13 +5,13 @@ import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function POST() {
-  const email = getVerfiyJWT();
-  if (!email) {
+  const token = await getVerfiyJWT();
+  if (!token) {
     return NextResponse.json({ message: "Not logged in" }, { status: 401 });
   }
 
   try {
-    await db.delete(sessions).where(eq(sessions.userId, email));
+    await db.delete(sessions).where(eq(sessions.userId, token.email));
   } catch {
     return NextResponse.json(
       { message: "Something went wrong" },
