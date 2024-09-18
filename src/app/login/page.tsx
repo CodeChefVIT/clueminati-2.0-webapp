@@ -48,11 +48,11 @@ export default function LoginPage() {
         if (response.data.data.teamId) {
           setTimeout(() => {
             router.push("/");
-          }, 2000);
+          }, 500);
         } else {
           setTimeout(() => {
             router.push("/team");
-          }, 2000);
+          }, 500);
         }
       } else {
         toast.error(response.data.message);

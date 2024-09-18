@@ -21,11 +21,11 @@ export default function Home() {
     if (!token) {
       setTimeout(() => {
         router.push("/login");
-        setLoading(false);
       }, 500);
-      return;
     }
-    setLoading(false);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
   }, []);
 
   return (
