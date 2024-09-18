@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import Loading from "@/components/Loading";
+import { type ApiResponse, type UserData } from "@/types/client/profile";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { type UserData, type ApiResponse } from "@/types/client/profile";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const ProfilePage = () => {
   const [user, setUser] = useState<UserData | null>(null);
@@ -82,18 +82,14 @@ const ProfilePage = () => {
   };
 
   if (loading) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        Loading...
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
     <div className="container mx-auto p-4">
       {user ? (
         <div className="rounded-lg bg-white p-6 shadow-md">
-          <h1 className="mb-4 text-2xl font-bold">User Info</h1>
+          <h1 className="mb-4 text-2xl font-semibold">User Info</h1>
           <p>
             <strong>Name:</strong> {user.name}
           </p>
@@ -103,7 +99,10 @@ const ProfilePage = () => {
 
           <form onSubmit={handleUpdate} className="mt-6">
             <div className="mb-4">
-              <label htmlFor="name" className="text-sm font-bold text-black">
+              <label
+                htmlFor="name"
+                className="text-sm font-semibold text-black"
+              >
                 Name
               </label>
               <input
@@ -119,7 +118,7 @@ const ProfilePage = () => {
             <div className="mb-4">
               <label
                 htmlFor="password"
-                className="text-sm font-bold text-black"
+                className="text-sm font-semibold text-black"
               >
                 Password
               </label>
@@ -135,7 +134,7 @@ const ProfilePage = () => {
 
             <button
               type="submit"
-              className="mt-4 w-full rounded-lg hover:bg-[#FBB3C0] p-3 text-lg font-semibold text-white bg-pink-400 focus:outline-none focus:ring-2 focus:ring-pink-600"
+              className="mt-4 w-full rounded-lg bg-pink-400 p-3 text-lg font-semibold text-white hover:bg-[#FBB3C0] focus:outline-none focus:ring-2 focus:ring-pink-600"
             >
               Update Profile
             </button>
@@ -173,8 +172,6 @@ const ProfilePage = () => {
       ) : (
         <p className="text-center text-gray-500">No user data available</p>
       )}
-
-      <ToastContainer />
     </div>
   );
 };

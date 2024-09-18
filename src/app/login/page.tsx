@@ -1,9 +1,9 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { ToastContainer, toast } from "react-toastify";
+import { LoginResponse } from "@/types/api/auth";
 import axios from "axios";
-import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { z } from "zod";
 
 // Validation schema using Zod for login
@@ -36,31 +36,28 @@ export default function LoginPage() {
     }
 
     try {
-      const response = await axios.post("/api/auth/login", {
-        email,
-        password,
-      });
-
-      console.log(response.data);
-      if (response.status === 200) {
-        toast.success("Login successful!");
-        localStorage.setItem("token", response.data.data.token);
-        if (response.data.data.teamId) {
-          setTimeout(() => {
-            router.push("/");
-          }, 2000);
-        } else {
-          setTimeout(() => {
-            router.push("/team");
-          }, 2000);
-        }
+      const { data }: { data: LoginResponse } = await axios.post(
+        "/api/auth/login",
+        {
+          email,
+          password,
+        },
+      );
+      toast.success("Login successful!");
+      localStorage.setItem("token", data.data.token);
+      if (data.data.teamId) {
+        router.push("/");
       } else {
-        toast.error(response.data.message);
+        router.push("/team");
       }
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || "Something went wrong");
+    } catch (e) {
+      toast.error("Something went wrong");
     }
   };
+
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-white p-4">
@@ -68,7 +65,7 @@ export default function LoginPage() {
         className="w-full max-w-md rounded-lg bg-white p-6"
         style={{ fontFamily: "Inter, sans-serif" }}
       >
-        <h1 className="mb-6 text-center text-2xl font-bold">Login</h1>
+        <h1 className="mb-6 text-center text-2xl font-semibold">Login</h1>
 
         <form className="flex flex-col gap-4" onSubmit={handleLoginSubmit}>
           <div className="mb-4 flex flex-col">
@@ -115,7 +112,6 @@ export default function LoginPage() {
           </button>
         </form>
       </main>
-      <ToastContainer />
     </div>
   );
 }

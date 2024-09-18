@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { type Team, type TeamsApiResponse } from "@/types/client/updatescore";
+import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const questionIds = [
   ...Array.from({ length: 30 }, (_, i) => `easy${i + 1}`), // Easy: easy1 to easy30
@@ -17,7 +16,7 @@ const questionIds = [
 ];
 
 export default function UpdateScorePage() {
-    const router = useRouter();
+  const router = useRouter();
   const [teams, setTeams] = useState<Team[]>([]);
   const [selectedTeamCode, setSelectedTeamCode] = useState<string>("");
   const [selectedQuestionId, setSelectedQuestionId] = useState<string>(
@@ -25,7 +24,6 @@ export default function UpdateScorePage() {
   );
   const [points, setPoints] = useState<number>(0);
   const [adminKey, setAdminKey] = useState<string>("");
-
 
   useEffect(() => {
     const fetchTeams = async () => {
@@ -85,7 +83,7 @@ export default function UpdateScorePage() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="mb-6 text-2xl font-bold">Award Points to Teams</h1>
+      <h1 className="mb-6 text-2xl font-semibold">Award Points to Teams</h1>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
@@ -177,8 +175,6 @@ export default function UpdateScorePage() {
           Update Score
         </button>
       </form>
-
-      <ToastContainer />
     </div>
   );
 }

@@ -15,7 +15,7 @@ const Dashboard = () => {
 
   return (
     <main className="mx-auto flex h-screen w-full max-w-[480px] flex-col items-center bg-white px-6 pt-12">
-      <h1 className="text-3xl font-bold text-black">Dashboard</h1>
+      <h1 className="text-3xl font-semibold text-black">Dashboard</h1>
       <TeamInfo />
 
       <section className="mt-20 flex flex-col items-center text-zinc-800">

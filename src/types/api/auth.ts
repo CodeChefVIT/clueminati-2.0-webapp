@@ -16,3 +16,13 @@ export interface updateScoreProps {
   points: number;
   key: string;
 }
+
+export interface LoginResponse {
+  message: string;
+  data: {
+    name: string;
+    email: string;
+    teamId: string;
+    token: string;
+  };
+}
