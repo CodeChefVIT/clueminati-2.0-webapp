@@ -179,7 +179,7 @@ const ProfilePage = () => {
 
             <Button
               type="submit"
-              disabled={name === user.name && !password} 
+              disabled={name === user.name && !password}
               className="mt-4 w-full rounded-lg bg-pink-400 p-3 text-lg font-semibold text-white hover:bg-[#FBB3C0] focus:outline-none focus:ring-2 focus:ring-pink-600"
             >
               Update Profile

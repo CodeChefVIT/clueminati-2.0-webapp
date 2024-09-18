@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: "Invalid data" }, { status: 400 });
     }
     return NextResponse.json(
-      { message: "Something went wrong" },
+      { message: "Something went wrong", error: e },
       { status: 500 },
     );
   }
@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json(
-      { message: "Something went wrong" },
+      { message: "Something went wrong", error: e },
       { status: 500 },
     );
   }

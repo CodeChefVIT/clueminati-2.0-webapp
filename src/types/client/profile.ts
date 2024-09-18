@@ -3,6 +3,7 @@ export interface UserData {
   email: string;
   teamId?: string;
   team?: TeamData;
+  station_code: string; // integrate this, banner on top to inform them their station
 }
 
 export interface TeamData {

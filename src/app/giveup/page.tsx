@@ -14,7 +14,7 @@ const questionIds = [
 
   // Station 4: 8 medium questions
   ...Array.from({ length: 8 }, (_, i) => `station4_medium${i + 1}`),
-  
+
   // Station 5: 9 medium questions
   ...Array.from({ length: 9 }, (_, i) => `station5_medium${i + 1}`),
 
