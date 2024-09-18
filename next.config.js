@@ -1,22 +1,17 @@
 // @ts-nocheck
-import {
-  PHASE_DEVELOPMENT_SERVER,
-  PHASE_PRODUCTION_BUILD,
-} from "next/constants.js";
+import withPWAInit from "@ducanh2912/next-pwa";
 
-/** @type {import("next").NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-};
+const withPWA = withPWAInit({
+  dest: "public",
+  disable: process.env.NODE_ENV === "development",
+  register: true,
+  skipWaiting: true,
+  // scope: "/app",
+  // sw: "service-worker.js",
+  //...
+});
 
-const nextConfigFunction = async (phase) => {
-  if (phase === PHASE_DEVELOPMENT_SERVER || phase === PHASE_PRODUCTION_BUILD) {
-    const withPWA = (await import("@ducanh2912/next-pwa")).default({
-      dest: "public",
-    });
-    return withPWA(nextConfig);
-  }
-  return nextConfig;
-};
-
-export default nextConfigFunction;
+// Your Next config is automatically typed!
+export default withPWA({
+  // Your Next.js config
+});
