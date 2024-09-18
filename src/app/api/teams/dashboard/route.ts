@@ -58,9 +58,10 @@ export async function GET() {
       data: {
         topTeams: allTeams.slice(0, 9),
         score: user.team?.score,
-        currentTier: tiers.curr,
-        nextTier: tiers.next,
+        currentTier: tiers.curr.toLowerCase(),
+        nextTier: tiers.next.toLowerCase(),
         pointsToNextTier: (tiers.scoreToBeat ?? 0) - (user.team?.score ?? 0),
+        name: user.team?.name,
       },
     },
     { status: 200 },

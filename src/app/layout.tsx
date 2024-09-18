@@ -52,9 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
-        <div className="scale-75">
-          <ToastContainer position="top-right" />
-        </div>
+        <ToastContainer position="top-right" />
         {children}
       </body>
     </html>

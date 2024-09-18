@@ -1,8 +1,10 @@
 "use client";
 
 import Loading from "@/components/Loading";
-import { createTeamAPIProps } from "@/types/api/team";
-import axios, { AxiosError } from "axios";
+import { Switch } from "@/components/ui/switch";
+import { type createTeamAPIProps } from "@/types/api/team";
+import { errorToast } from "@/utils/errors";
+import axios, { type AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -30,9 +32,7 @@ export default function TeamLookup() {
     try {
       const { data }: { data: createTeamAPIProps } = await axios.post(
         "/api/teams/create",
-        {
-          teamName,
-        },
+        { teamName },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -44,19 +44,20 @@ export default function TeamLookup() {
       router.push("/team/created");
     } catch (e) {
       const err = e as AxiosError;
-      console.log(err);
-      toast.error("Something went wrong");
-      console.log(e);
+      if (err.status === 401) {
+        setTimeout(() => {
+          router.push("/login");
+        }, 2000);
+      }
+      errorToast(e);
     }
   };
 
   const JoinTeam = async () => {
     try {
-      const response = await axios.post(
+      await axios.post(
         "/api/teams/join",
-        {
-          teamCode,
-        },
+        { teamCode },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -67,20 +68,24 @@ export default function TeamLookup() {
       router.push("/");
     } catch (e) {
       const err = e as AxiosError;
-      console.log(err);
-      toast.error("Something went wrong");
+      if (err.status === 401) {
+        setTimeout(() => {
+          router.push("/login");
+        }, 2000);
+      }
+      errorToast(e);
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
     setIsLoading(true);
     if (isCreatingTeam) {
       await CreateTeam();
-      console.log("Creating a new team");
       setIsLoading(false);
     } else {
       await JoinTeam();
-      console.log("Joining an existing");
     }
     setIsLoading(false);
   };
@@ -102,23 +107,10 @@ export default function TeamLookup() {
             <span className="mr-4 text-lg">
               {isCreatingTeam ? "  Yes" : "  No"}
             </span>
-            <label className="inline-flex cursor-pointer items-center">
-              <div
-                className={`relative inline-flex h-5 w-10 items-center rounded-full border ${
-                  isCreatingTeam ? "bg-[#AEF276]" : "bg-[#88DBF9]"
-                }`}
-                onClick={() => {
-                  setIsCreatingTeam(!isCreatingTeam);
-                  console.log(isCreatingTeam);
-                }}
-              >
-                <div
-                  className={`absolute left-0 top-0 h-5 w-5 rounded-full bg-white transition-transform ${
-                    isCreatingTeam ? "translate-x-5" : ""
-                  }`}
-                />
-              </div>
-            </label>
+            <Switch
+              checked={isCreatingTeam}
+              onCheckedChange={() => setIsCreatingTeam((prev) => !prev)}
+            />
           </div>
           <div className="mt-2 text-center text-sm font-normal text-gray-400">
             {isCreatingTeam
@@ -127,57 +119,62 @@ export default function TeamLookup() {
           </div>
         </div>
 
-        {isCreatingTeam ? (
-          <div className="mb-4">
-            <label
-              htmlFor="teamName"
-              className="text-sm font-semibold text-gray-700"
-            >
-              Team Name
-            </label>
-            <input
-              value={teamName}
-              onChange={(e) => setTeamName(e.target.value)}
-              className="w-full rounded-lg border-none bg-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              placeholder="Enter team name"
-            />
-          </div>
-        ) : (
-          <div className="mb-4">
-            <label
-              htmlFor="teamCode"
-              className="text-sm font-semibold text-gray-700"
-            >
-              Join a team
-            </label>
-            <p className="mb-2 text-sm text-gray-500">
-              Enter the code from your team to join them!
-            </p>
-            <input
-              value={teamCode}
-              onChange={(e) => setTeamCode(e.target.value)}
-              className="w-full rounded-lg border-none bg-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              placeholder="Enter team code"
-            />
-          </div>
-        )}
+        <form onSubmit={handleSubmit}>
+          {isCreatingTeam ? (
+            <div className="mb-4">
+              <label
+                htmlFor="teamName"
+                className="text-sm font-semibold text-gray-700"
+              >
+                Team Name
+              </label>
+              <input
+                value={teamName}
+                required
+                onChange={(e) => setTeamName(e.target.value)}
+                className="w-full rounded-lg border-none bg-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                placeholder="Enter team name"
+              />
+            </div>
+          ) : (
+            <div className="mb-4">
+              <label
+                htmlFor="teamCode"
+                className="text-sm font-semibold text-gray-700"
+              >
+                Join a team
+              </label>
+              <p className="mb-2 text-sm text-gray-500">
+                Enter the code from your team to join them!
+              </p>
+              <input
+                value={teamCode}
+                onChange={(e) => setTeamCode(e.target.value)}
+                required
+                maxLength={6}
+                minLength={6}
+                className="w-full rounded-lg border-none bg-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                placeholder="Enter team code"
+              />
+            </div>
+          )}
 
-        <button
-          type="button"
-          onClick={handleSubmit}
-          disabled={isLoading}
-          className={`w-full rounded-lg py-2 font-medium ${
-            isCreatingTeam
-              ? "bg-[#AEF276] text-black hover:bg-green-700"
-              : "bg-[#88DBF9] text-black hover:bg-blue-700"
-          } mt-4`}
-        >
-          {isLoading
-            ? "Loading..."
-            : isCreatingTeam
-              ? "Create Team"
-              : "Join Team"}
-        </button>
+          <button
+            type="submit"
+            disabled={isLoading}
+            className={`w-full rounded-lg py-2 font-medium ${
+              isCreatingTeam
+                ? "bg-[#AEF276] text-black hover:bg-green-700"
+                : "bg-[#88DBF9] text-black hover:bg-blue-700"
+            } mt-4`}
+          >
+            {isLoading
+              ? "Loading..."
+              : isCreatingTeam
+                ? "Create Team"
+                : "Join Team"}
+          </button>
+        </form>
       </div>
     </div>
   );

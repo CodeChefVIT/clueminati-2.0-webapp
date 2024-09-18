@@ -13,7 +13,9 @@ export async function DELETE() {
   let user;
   try {
     [user] = await db.select().from(users).where(eq(users.email, token.email));
-  } catch {
+  } catch (e) {
+    console.log(e);
+
     return NextResponse.json(
       { message: "Something went wrong" },
       { status: 500 },
@@ -32,7 +34,9 @@ export async function DELETE() {
   let team;
   try {
     [team] = await db.select().from(teams).where(eq(teams.id, user.teamId));
-  } catch {
+  } catch (e) {
+    console.log(e);
+
     return NextResponse.json(
       { message: "Something went wrong" },
       { status: 500 },
@@ -40,10 +44,10 @@ export async function DELETE() {
   }
 
   if (!team) {
-    return NextResponse.json({ error: "Team not found" }, { status: 404 });
+    return NextResponse.json({ message: "Team not found" }, { status: 404 });
   } else if (!team.userIds.includes(token.email)) {
     return NextResponse.json(
-      { error: "User is not part of this team" },
+      { message: "User is not part of this team" },
       { status: 400 },
     );
   }
@@ -53,7 +57,9 @@ export async function DELETE() {
       .update(users)
       .set({ teamId: null })
       .where(eq(users.email, token.email));
-  } catch {
+  } catch (e) {
+    console.log(e);
+
     return NextResponse.json(
       { message: "Something went wrong" },
       { status: 500 },
@@ -67,12 +73,14 @@ export async function DELETE() {
       await db
         .update(teams)
         .set({
-          userIds: sql`array_remove(userIds, ${token.email})`,
-          userCount: sql`userCount - 1`,
+          userIds: sql`array_remove(user_ids, ${token.email})`,
+          userCount: sql`user_count - 1`,
         })
         .where(eq(teams.id, user.teamId));
     }
-  } catch {
+  } catch (e) {
+    console.log(e);
+
     await db
       .update(users)
       .set({ teamId: team.id })

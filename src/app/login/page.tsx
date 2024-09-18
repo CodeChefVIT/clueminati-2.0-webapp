@@ -1,5 +1,6 @@
 "use client";
-import { LoginResponse } from "@/types/api/auth";
+import { type LoginResponse } from "@/types/api/auth";
+import { errorToast } from "@/utils/errors";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,10 +9,15 @@ import { z } from "zod";
 
 // Validation schema using Zod for login
 const loginSchema = z.object({
-  email: z.string().email({ message: "Invalid email address" }),
+  email: z
+    .string()
+    .email({ message: "Invalid email address" })
+    .regex(/@vitstudent.ac.in$/, {
+      message: "Only VIT student email addresses are allowed",
+    }),
   password: z
     .string()
-    .min(4, { message: "Password must be at least 6 characters long" }),
+    .min(4, { message: "Password must be at least 4 characters long" }),
 });
 
 export default function LoginPage() {
@@ -39,8 +45,8 @@ export default function LoginPage() {
       const { data }: { data: LoginResponse } = await axios.post(
         "/api/auth/login",
         {
-          email,
-          password,
+          email: email.trim(),
+          password: password.trim(),
         },
       );
       toast.success("Login successful!");
@@ -51,7 +57,7 @@ export default function LoginPage() {
         router.push("/team");
       }
     } catch (e) {
-      toast.error("Something went wrong");
+      errorToast(e);
     }
   };
 

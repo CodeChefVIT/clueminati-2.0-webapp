@@ -1,12 +1,16 @@
 "use client";
 
 import Loading from "@/components/Loading";
+import { Button } from "@/components/ui/button";
 import { type ApiResponse, type UserData } from "@/types/client/profile";
 import axios from "axios";
+import { ChevronLeft, LogOut } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const ProfilePage = () => {
+  const router = useRouter();
   const [user, setUser] = useState<UserData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [name, setName] = useState<string>("");
@@ -26,6 +30,9 @@ const ProfilePage = () => {
       } catch (error) {
         if (axios.isAxiosError(error)) {
           toast.error("Failed to fetch user data");
+          setTimeout(() => {
+            void router.push("/login");
+          }, 2000);
         } else {
           toast.error("Unknown error occurred while fetching user data");
         }
@@ -35,7 +42,7 @@ const ProfilePage = () => {
     };
 
     void fetchUserData();
-  }, []);
+  }, [router]);
 
   const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -64,12 +71,18 @@ const ProfilePage = () => {
 
       toast.success(response.data.message);
       setUser(response.data.data);
+      setTimeout(() => {
+        void router.push("/");
+      }, 2000);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 400) {
           toast.error("Invalid data");
         } else if (error.response?.status === 401) {
           toast.error("Not logged in");
+          setTimeout(() => {
+            void router.push("/login");
+          }, 2000);
         } else if (error.response?.status === 500) {
           toast.error("Something went wrong");
         } else if (error.response?.status === 429) {
@@ -81,12 +94,44 @@ const ProfilePage = () => {
     }
   };
 
+  const handleLeaveTeam = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.delete<ApiResponse>("/api/teams/leave", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      toast.success(response.data.message);
+      setTimeout(() => {
+        void router.push("/team");
+      }, 2000);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          toast.error("Not logged in");
+          setTimeout(() => {
+            void router.push("/login");
+          }, 2000);
+        } else if (error.response?.status === 500) {
+          toast.error("Something went wrong");
+        }
+      } else {
+        toast.error("Unknown error occurred while leaving team");
+      }
+    }
+  };
+
   if (loading) {
     return <Loading />;
   }
 
   return (
     <div className="container mx-auto p-4">
+      <Button size="icon" variant="ghost" onClick={() => void router.push("/")}>
+        <ChevronLeft />
+      </Button>
       {user ? (
         <div className="rounded-lg bg-white p-6 shadow-md">
           <h1 className="mb-4 text-2xl font-semibold">User Info</h1>
@@ -132,17 +177,23 @@ const ProfilePage = () => {
               />
             </div>
 
-            <button
+            <Button
               type="submit"
+              disabled={name === user.name && !password} 
               className="mt-4 w-full rounded-lg bg-pink-400 p-3 text-lg font-semibold text-white hover:bg-[#FBB3C0] focus:outline-none focus:ring-2 focus:ring-pink-600"
             >
               Update Profile
-            </button>
+            </Button>
           </form>
 
           {user.team ? (
             <div className="mt-6">
-              <h2 className="mb-2 text-xl font-semibold">Team Info</h2>
+              <div className="flex items-center justify-between">
+                <h2 className="mb-2 text-xl font-semibold">Team Info</h2>
+                <Button size="icon" variant="ghost" onClick={handleLeaveTeam}>
+                  <LogOut />
+                </Button>
+              </div>
               <p>
                 <strong>Team Name:</strong> {user.team.name}
               </p>

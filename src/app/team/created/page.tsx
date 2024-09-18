@@ -19,7 +19,7 @@ const Page = () => {
       toast.error("Something went wrong!");
       router.push("/login");
     }
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     setLoading(true);
@@ -32,7 +32,7 @@ const Page = () => {
     setTimeout(() => {
       setLoading(false);
     }, 2000);
-  }, []);
+  }, [router]);
 
   if (loading) {
     return <Loading />;

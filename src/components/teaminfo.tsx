@@ -1,15 +1,19 @@
-import circ from "@/assets/images/circle.svg";
+import { icons } from "@/assets/icons";
 import icon1 from "@/assets/images/ico1.svg";
-import icon2 from "@/assets/images/ico2.svg";
 import { Progress } from "@/components/ui/progress";
+import { type dashboardData } from "@/types/client/dashboard";
 import Image from "next/image";
 
-const TeamInfo = () => {
+interface TeamInfoProps {
+  data: dashboardData;
+}
+
+const TeamInfo: React.FC<TeamInfoProps> = ({ data }) => {
   return (
     <section className="mt-3 flex w-full flex-col self-stretch rounded-2xl bg-customYellow pb-2.5">
       <div className="flex self-start text-base font-medium">
         <Image
-          src={circ as HTMLImageElement}
+          src={icons[data.currentTier]}
           alt="Team avatar"
           height={1000}
           width={1000}
@@ -17,10 +21,13 @@ const TeamInfo = () => {
         />
         <div className="my-auto flex flex-col items-start">
           <h2 className="self-stretch text-xl font-semibold text-black">
-            Team Name
+            {data.name}
           </h2>
-          <p className="text-black">400 Points</p>
-          <p className="mt-1 text-xs text-zinc-600">Bronze Tier</p>
+          <p className="text-black">{data.score} Points</p>
+          <p className="mt-1 text-xs text-zinc-600">
+            {`${data.currentTier.charAt(0).toUpperCase()}${data.currentTier.substring(1)}`}{" "}
+            Tier
+          </p>
         </div>
       </div>
       <div className="flex w-full flex-col px-3">
@@ -34,10 +41,13 @@ const TeamInfo = () => {
               width={1000}
               className="aspect-square w-[40px] shrink-0 object-contain sm:w-[61px]"
             />
-            <p>Minimum requirement for silver tier currently is 600 points</p>
+            <p>
+              Minimum requirement for {data.nextTier} tier currently is{" "}
+              {data.pointsToNextTier} points
+            </p>
           </div>
           <Image
-            src={icon2 as HTMLImageElement}
+            src={icons[data.nextTier]}
             alt=""
             height={1000}
             width={1000}

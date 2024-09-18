@@ -5,96 +5,25 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { Drawer } from "vaul";
 import { icons } from "../assets/icons";
+import { type dashboardData } from "@/types/client/dashboard";
 
-interface Team {
-  rank: number;
-  name: string;
-  tier: string;
-  color: string;
-  icon: keyof typeof icons;
-}
-
-const teams: Team[] = [
-  {
-    rank: 1,
-    name: "Team Name",
-    tier: "Diamond Tier",
-    color: "bg-customYellow",
-    icon: "diamond",
-  },
-  {
-    rank: 2,
-    name: "Team Name",
-    tier: "Diamond Tier",
-    color: "bg-customBlue",
-    icon: "diamond",
-  },
-  {
-    rank: 3,
-    name: "Team Name",
-    tier: "Diamond Tier",
-    color: "bg-customGreen",
-    icon: "diamond",
-  },
-  {
-    rank: 4,
-    name: "Team Name",
-    tier: "Diamond Tier",
-    color: "bg-customOrange",
-    icon: "diamond",
-  },
-  {
-    rank: 5,
-    name: "Team Name",
-    tier: "Diamond Tier",
-    color: "bg-customYellow",
-    icon: "diamond",
-  },
-  {
-    rank: 6,
-    name: "Team Name",
-    tier: "Diamond Tier",
-    color: "bg-customBlue",
-    icon: "diamond",
-  },
-  {
-    rank: 7,
-    name: "Team Name",
-    tier: "Diamond Tier",
-    color: "bg-customGreen",
-    icon: "diamond",
-  },
-  {
-    rank: 8,
-    name: "Team Name",
-    tier: "Diamond Tier",
-    color: "bg-customOrange",
-    icon: "diamond",
-  },
-  {
-    rank: 9,
-    name: "Team Name",
-    tier: "Diamond Tier",
-    color: "bg-customYellow",
-    icon: "diamond",
-  },
-  {
-    rank: 10,
-    name: "Your Team Name",
-    tier: "Silver Tier",
-    color: "bg-customBlue",
-    icon: "silver",
-  },
+const colors = [
+  "bg-customYellow",
+  "bg-customBlue",
+  "bg-customGreen",
+  "bg-customOrange",
 ];
 
 interface LeaderboardProps {
   show: boolean;
   toggleLeaderboard: () => void;
+  leaderboardData: dashboardData;
 }
 
 const Leaderboard: React.FC<LeaderboardProps> = ({
   show,
   toggleLeaderboard,
+  leaderboardData,
 }) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
 
@@ -149,13 +78,13 @@ const Leaderboard: React.FC<LeaderboardProps> = ({
               paddingBottom: isFullScreen ? "2rem" : "2rem",
             }}
           >
-            {teams.map((team) => (
+            {leaderboardData.topTeams.map((team, i) => (
               <div
-                key={team.rank}
-                className={`mb-2 flex items-center justify-between rounded-lg py-3 ${team.color} mx-auto max-w-3xl`}
+                key={i}
+                className={`mb-2 flex items-center justify-between rounded-lg py-3 ${colors[i % 4]} mx-auto max-w-3xl`}
               >
                 <div className="flex items-center">
-                  {team.rank === 10 ? (
+                  {i === 9 ? (
                     <Image
                       src={icons.chef}
                       alt="chef"
@@ -165,7 +94,7 @@ const Leaderboard: React.FC<LeaderboardProps> = ({
                     />
                   ) : (
                     <span className="ml-4 mr-4 text-4xl font-semibold text-leaderboardBg md:text-5xl">
-                      {team.rank}
+                      {i + 1}
                     </span>
                   )}
 
@@ -175,15 +104,21 @@ const Leaderboard: React.FC<LeaderboardProps> = ({
                     </div>
 
                     <div className="font-poppins text-xs text-leaderboardBg opacity-60 md:text-sm">
-                      {team.tier}
+                      {i === 9
+                        ? `${leaderboardData.currentTier.charAt(0).toUpperCase()}${leaderboardData.currentTier.substring(1)}`
+                        : "Diamond"}
                     </div>
                   </div>
                 </div>
 
                 <div className="text-3xl md:text-4xl">
                   <Image
-                    src={icons[team.icon]}
-                    alt={team.icon}
+                    src={
+                      i === 9
+                        ? icons[leaderboardData.currentTier]
+                        : icons.diamond
+                    }
+                    alt=""
                     width={60}
                     height={60}
                     className="mr-3 h-12 w-12 md:h-14 md:w-14"

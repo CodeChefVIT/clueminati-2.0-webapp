@@ -65,12 +65,12 @@ export async function POST(req: NextRequest) {
   }
 
   if (!team) {
-    return NextResponse.json({ error: "Team not found" }, { status: 404 });
+    return NextResponse.json({ message: "Team not found" }, { status: 404 });
   } else if (team.userCount === parseInt(process.env.MAX_TEAM_SIZE ?? "5")) {
-    return NextResponse.json({ error: "Team is full" }, { status: 409 });
+    return NextResponse.json({ message: "Team is full" }, { status: 409 });
   } else if (team.userIds.includes(token.email)) {
     return NextResponse.json(
-      { error: "User is already part of the team" },
+      { message: "User is already part of the team" },
       { status: 400 },
     );
   }
