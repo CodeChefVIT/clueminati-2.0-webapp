@@ -7,12 +7,22 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const questionIds = [
-  ...Array.from({ length: 30 }, (_, i) => `easy${i + 1}`), // Easy: easy1 to easy30
-  ...Array.from({ length: 17 }, (_, i) => `medium${i + 1}`), // Medium: medium1 to medium17
-  ...Array.from({ length: 17 }, (_, i) => `tough${i + 1}`), // Tough: tough1 to tough17
+  // Station 1, 2, 3: 10 easy questions each
+  ...Array.from({ length: 10 }, (_, i) => `station1_easy${i + 1}`),
+  ...Array.from({ length: 10 }, (_, i) => `station2_easy${i + 1}`),
+  ...Array.from({ length: 10 }, (_, i) => `station3_easy${i + 1}`),
 
-  ...Array.from({ length: 7 }, (_, i) => `set1_${i + 1}`), // Set 1: set1_1 to set1_7
-  ...Array.from({ length: 6 }, (_, i) => `set2_${i + 1}`), // Set 2: set2_1 to set2_6
+  // Station 4: 8 medium questions
+  ...Array.from({ length: 8 }, (_, i) => `station4_medium${i + 1}`),
+  
+  // Station 5: 9 medium questions
+  ...Array.from({ length: 9 }, (_, i) => `station5_medium${i + 1}`),
+
+  // Station 6: 8 tough questions
+  ...Array.from({ length: 8 }, (_, i) => `station6_tough${i + 1}`),
+
+  // Station 7: 9 tough questions
+  ...Array.from({ length: 9 }, (_, i) => `station7_tough${i + 1}`),
 ];
 
 export default function UpdateScorePage() {
