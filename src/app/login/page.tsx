@@ -1,9 +1,8 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
-import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "react-toastify";
 import { z } from "zod";
 
 // Validation schema using Zod for login
@@ -46,13 +45,9 @@ export default function LoginPage() {
         toast.success("Login successful!");
         localStorage.setItem("token", response.data.data.token);
         if (response.data.data.teamId) {
-          setTimeout(() => {
-            router.push("/");
-          }, 500);
+          router.push("/");
         } else {
-          setTimeout(() => {
-            router.push("/team");
-          }, 500);
+          router.push("/team");
         }
       } else {
         toast.error(response.data.message);
@@ -68,7 +63,7 @@ export default function LoginPage() {
         className="w-full max-w-md rounded-lg bg-white p-6"
         style={{ fontFamily: "Inter, sans-serif" }}
       >
-        <h1 className="mb-6 text-center text-2xl font-bold">Login</h1>
+        <h1 className="mb-6 text-center text-2xl font-semibold">Login</h1>
 
         <form className="flex flex-col gap-4" onSubmit={handleLoginSubmit}>
           <div className="mb-4 flex flex-col">
@@ -115,7 +110,6 @@ export default function LoginPage() {
           </button>
         </form>
       </main>
-      <ToastContainer />
     </div>
   );
 }

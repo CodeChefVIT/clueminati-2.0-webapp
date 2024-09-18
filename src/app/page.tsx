@@ -28,28 +28,25 @@ export default function Home() {
     }, 2000);
   }, []);
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <main className="relative min-h-screen bg-gray-100">
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
-          {" "}
-          <Dashboard />
-          <Leaderboard
-            show={showLeaderboard}
-            toggleLeaderboard={toggleLeaderboard}
-          />
-          <div className="fixed bottom-0 flex w-full justify-center bg-gray-800 p-4">
-            <Button
-              onClick={toggleLeaderboard}
-              className="rounded-lg bg-blue-600 px-6 py-2 font-semibold text-white hover:bg-customBlue"
-            >
-              {showLeaderboard ? "Hide Leaderboard" : "Show Leaderboard"}
-            </Button>
-          </div>
-        </>
-      )}
+      <Dashboard />
+      <Leaderboard
+        show={showLeaderboard}
+        toggleLeaderboard={toggleLeaderboard}
+      />
+      <div className="fixed bottom-0 flex w-full justify-center bg-gray-800 p-4">
+        <Button
+          onClick={toggleLeaderboard}
+          className="rounded-lg bg-blue-600 px-6 py-2 font-semibold text-white hover:bg-customBlue"
+        >
+          {showLeaderboard ? "Hide Leaderboard" : "Show Leaderboard"}
+        </Button>
+      </div>
     </main>
   );
 }
