@@ -1,116 +1,88 @@
 "use client";
 
 import Loading from "@/components/Loading";
-import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
+import { createTeamAPIProps } from "@/types/api/team";
+import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { z } from "zod";
-
-const schema = z.object({
-  teamName: z.string().min(1, { message: "Team name is required" }).trim(),
-  teamCode: z.string().optional(),
-});
-
-type FormData = z.infer<typeof schema>;
 
 export default function TeamLookup() {
-  const [loading, setLoading] = useState(true);
-  const [isCreatingTeam, setIsCreatingTeam] = useState<boolean>(true);
+  const [isCreatingTeam, setIsCreatingTeam] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [teamName, setTeamName] = useState<string>("");
+  const [teamCode, setTeamCode] = useState<string>("");
 
   const router = useRouter();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
-  });
-
   useEffect(() => {
-    setLoading(true);
     const token = localStorage.getItem("token");
     if (!token) {
       setTimeout(() => {
         router.push("/login");
       }, 500);
     }
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  }, []);
+    setLoading(false);
+  }, [router]);
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      toast.error("Authentication token not found");
-      return;
-    }
-
-    setIsLoading(true);
-
+  const CreateTeam = async () => {
     try {
-      if (isCreatingTeam) {
-        const response = await axios.post(
-          "/api/teams/create",
-          {
-            teamName: data.teamName,
+      const { data }: { data: createTeamAPIProps } = await axios.post(
+        "/api/teams/create",
+        {
+          teamName,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        );
-
-        if (response.status === 201) {
-          const { message, data: teamData } = response.data;
-          localStorage.setItem("team", teamData.teamCode);
-          toast.success(message);
-          setTimeout(() => {
-            router.push("/team/created");
-          }, 500);
-        } else {
-          toast.error("Unexpected response status");
-        }
-      } else {
-        if (!data.teamCode) {
-          toast.error("Team code is required");
-          return;
-        }
-
-        const response = await axios.post(
-          "/api/teams/join",
-          {
-            teamCode: data.teamCode,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        );
-
-        if (response.status === 200) {
-          toast.success("Successfully joined the team!");
-        } else {
-          toast.error("Unexpected response status");
-        }
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        toast.error(error.response?.data.message || "Something went wrong");
-      } else {
-        toast.error("An unexpected error occurred");
-      }
-    } finally {
-      setIsLoading(false);
+        },
+      );
+      toast.success(data.message);
+      localStorage.setItem("team", data.data.teamCode);
+      router.push("/team/created");
+    } catch (e) {
+      const err = e as AxiosError;
+      console.log(err);
+      toast.error("Something went wrong");
+      console.log(e);
     }
+  };
+
+  const JoinTeam = async () => {
+    try {
+      const response = await axios.post(
+        "/api/teams/join",
+        {
+          teamCode,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        },
+      );
+      toast.success("Team joined successfully");
+      router.push("/");
+    } catch (e) {
+      const err = e as AxiosError;
+      console.log(err);
+      toast.error("Something went wrong");
+    }
+  };
+
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    if (isCreatingTeam) {
+      await CreateTeam();
+      console.log("Creating a new team");
+      setIsLoading(false);
+    } else {
+      await JoinTeam();
+      console.log("Joining an existing");
+    }
+    setIsLoading(false);
   };
 
   if (loading) {
@@ -119,10 +91,7 @@ export default function TeamLookup() {
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-white">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="mt-8 w-full max-w-md rounded-lg bg-white p-8"
-      >
+      <div className="mt-8 w-full max-w-md rounded-lg bg-white p-8">
         <h1 className="mb-6 text-center text-2xl font-semibold leading-7">
           Team Formation
         </h1>
@@ -138,7 +107,10 @@ export default function TeamLookup() {
                 className={`relative inline-flex h-5 w-10 items-center rounded-full border ${
                   isCreatingTeam ? "bg-[#AEF276]" : "bg-[#88DBF9]"
                 }`}
-                onClick={() => setIsCreatingTeam((prevState) => !prevState)}
+                onClick={() => {
+                  setIsCreatingTeam(!isCreatingTeam);
+                  console.log(isCreatingTeam);
+                }}
               >
                 <div
                   className={`absolute left-0 top-0 h-5 w-5 rounded-full bg-white transition-transform ${
@@ -156,26 +128,20 @@ export default function TeamLookup() {
         </div>
 
         {isCreatingTeam ? (
-          <>
-            <div className="mb-4">
-              <label
-                htmlFor="teamName"
-                className="text-sm font-semibold text-gray-700"
-              >
-                Team Name
-              </label>
-              <input
-                {...register("teamName")}
-                className="w-full rounded-lg border-none bg-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                placeholder="Enter team name"
-              />
-              {errors.teamName && (
-                <p className="mt-1 text-xs text-red-500">
-                  {errors.teamName.message}
-                </p>
-              )}
-            </div>
-          </>
+          <div className="mb-4">
+            <label
+              htmlFor="teamName"
+              className="text-sm font-semibold text-gray-700"
+            >
+              Team Name
+            </label>
+            <input
+              value={teamName}
+              onChange={(e) => setTeamName(e.target.value)}
+              className="w-full rounded-lg border-none bg-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="Enter team name"
+            />
+          </div>
         ) : (
           <div className="mb-4">
             <label
@@ -188,20 +154,17 @@ export default function TeamLookup() {
               Enter the code from your team to join them!
             </p>
             <input
-              {...register("teamCode")}
+              value={teamCode}
+              onChange={(e) => setTeamCode(e.target.value)}
               className="w-full rounded-lg border-none bg-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               placeholder="Enter team code"
             />
-            {errors.teamCode && (
-              <p className="mt-1 text-xs text-red-500">
-                {errors.teamCode.message}
-              </p>
-            )}
           </div>
         )}
 
         <button
-          type="submit"
+          type="button"
+          onClick={handleSubmit}
           disabled={isLoading}
           className={`w-full rounded-lg py-2 font-medium ${
             isCreatingTeam
@@ -215,7 +178,7 @@ export default function TeamLookup() {
               ? "Create Team"
               : "Join Team"}
         </button>
-      </form>
+      </div>
     </div>
   );
 }

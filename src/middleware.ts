@@ -1,16 +1,16 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
-const rateLimit = 5;
+const rateLimit = 25;
 const timeWindow = 10 * 60 * 1000;
 
-const ipRequestMap = new Map<string, { count: number, startTime: number }>();
+const ipRequestMap = new Map<string, { count: number; startTime: number }>();
 
-const rateLimitExceededResponse = () => 
-  new NextResponse('Rate limit exceeded', { status: 429 });
+const rateLimitExceededResponse = () =>
+  new NextResponse("Rate limit exceeded", { status: 429 });
 
 export function middleware(req: NextRequest) {
-  const ip = req.ip ?? '127.0.0.1';
+  const ip = req.ip ?? "127.0.0.1";
   const currentTime = Date.now();
   const hit = ipRequestMap.get(ip);
 
@@ -33,5 +33,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/api/auth/login', '/api/auth/update'],
+  matcher: ["/api/auth/login", "/api/auth/update"],
 };

@@ -1,11 +1,11 @@
+import { getVerfiyJWT } from "@/lib/authHeader";
 import { db } from "@/server/db";
 import { teams, users } from "@/server/db/schema";
-import { type NextRequest, NextResponse } from "next/server";
-import { eq } from "drizzle-orm/expressions";
-import { getVerfiyJWT } from "@/lib/authHeader";
-import { getTeamCode } from "@/utils/teamCode";
-import { type PostgresError } from "postgres";
 import { type createTeamProps } from "@/types/api/team";
+import { getTeamCode } from "@/utils/teamCode";
+import { eq } from "drizzle-orm/expressions";
+import { type NextRequest, NextResponse } from "next/server";
+import { type PostgresError } from "postgres";
 
 export async function POST(req: NextRequest) {
   const token = await getVerfiyJWT();
@@ -123,6 +123,6 @@ export async function POST(req: NextRequest) {
         teamCode: team.teamCode,
       },
     },
-    { status: 201 },
+    { status: 200 },
   );
 }

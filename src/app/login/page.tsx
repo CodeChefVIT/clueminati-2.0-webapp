@@ -1,7 +1,8 @@
 "use client";
+import { LoginResponse } from "@/types/api/auth";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { z } from "zod";
 
@@ -35,27 +36,28 @@ export default function LoginPage() {
     }
 
     try {
-      const response = await axios.post("/api/auth/login", {
-        email,
-        password,
-      });
-
-      console.log(response.data);
-      if (response.status === 200) {
-        toast.success("Login successful!");
-        localStorage.setItem("token", response.data.data.token);
-        if (response.data.data.teamId) {
-          router.push("/");
-        } else {
-          router.push("/team");
-        }
+      const { data }: { data: LoginResponse } = await axios.post(
+        "/api/auth/login",
+        {
+          email,
+          password,
+        },
+      );
+      toast.success("Login successful!");
+      localStorage.setItem("token", data.data.token);
+      if (data.data.teamId) {
+        router.push("/");
       } else {
-        toast.error(response.data.message);
+        router.push("/team");
       }
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || "Something went wrong");
+    } catch (e) {
+      toast.error("Something went wrong");
     }
   };
+
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-white p-4">
