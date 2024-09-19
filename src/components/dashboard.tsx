@@ -37,7 +37,7 @@ const Dashboard: React.FC<DashboardProps> = ({ leaderboardData }) => {
       <TeamInfo data={leaderboardData} />
 
       <div className="mt-6 w-full rounded-lg bg-customBlue">
-        {leaderboardData.station ? (
+        {typeof leaderboardData.station === "number" ? (
           <p className="py-2 text-center text-lg font-semibold text-black">
             Station: {leaderboardData.station}
           </p>
