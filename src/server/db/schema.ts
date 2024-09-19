@@ -68,6 +68,7 @@ export const teams = createTable(
     solved: text("solved")
       .array()
       .default(sql`'{}'::text[]`),
+    station: integer("station"),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),

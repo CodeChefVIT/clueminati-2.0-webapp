@@ -13,3 +13,7 @@ export interface createTeamAPIProps {
 export interface joinTeamProps {
   teamCode: string;
 }
+
+export interface startHuntProps {
+  key: string;
+}

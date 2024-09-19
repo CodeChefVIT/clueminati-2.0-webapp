@@ -8,6 +8,13 @@
       "when": 1726509722249,
       "tag": "0000_optimal_maverick",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1726724187072,
+      "tag": "0001_goofy_barracuda",
+      "breakpoints": true
     }
   ]
 }

@@ -5,6 +5,13 @@ import { eq, sql } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function DELETE() {
+  if (process.env.STARTED === "true") {
+    return NextResponse.json(
+      { message: "The hunt has begun!" },
+      { status: 403 },
+    );
+  }
+
   const token = await getVerfiyJWT();
   if (!token) {
     return NextResponse.json({ message: "Not logged in" }, { status: 401 });

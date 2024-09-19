@@ -8,6 +8,13 @@ import { type NextRequest, NextResponse } from "next/server";
 import { type PostgresError } from "postgres";
 
 export async function POST(req: NextRequest) {
+  if (process.env.STARTED === "true") {
+    return NextResponse.json(
+      { message: "The hunt has begun!" },
+      { status: 403 },
+    );
+  }
+
   const token = await getVerfiyJWT();
   if (!token) {
     return NextResponse.json({ message: "Not logged in" }, { status: 401 });

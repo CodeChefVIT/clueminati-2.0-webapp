@@ -13,6 +13,8 @@ export const env = createEnv({
       .default("development"),
     SIGNUP_KEY: z.string(),
     JWT_SECRET: z.string(),
+    MAX_TEAM_SIZE: z.string(),
+    START_KEY: z.string(),
   },
 
   /**
@@ -31,6 +33,8 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     SIGNUP_KEY: process.env.SIGNUP_KEY,
     JWT_SECRET: process.env.JWT_SECRET,
+    MAX_TEAM_SIZE: process.env.MAX_TEAM_SIZE,
+    START_KEY: process.env.START_KEY,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
