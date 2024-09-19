@@ -3,8 +3,9 @@
 import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
 import { type ApiResponse, type UserData } from "@/types/client/profile";
+import { copyToClipboard } from "@/utils/copyToClipboard";
 import axios from "axios";
-import { ChevronLeft, LogOut } from "lucide-react";
+import { ChevronLeft, Copy } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -133,7 +134,7 @@ const ProfilePage = () => {
         <ChevronLeft />
       </Button>
       {user ? (
-        <div className="rounded-lg bg-white p-6 shadow-md">
+        <div className="rounded-lg bg-white p-6">
           <h1 className="mb-4 text-2xl font-semibold">User Info</h1>
           <p>
             <strong>Name:</strong> {user.name}
@@ -190,15 +191,26 @@ const ProfilePage = () => {
             <div className="mt-6">
               <div className="flex items-center justify-between">
                 <h2 className="mb-2 text-xl font-semibold">Team Info</h2>
-                <Button size="icon" variant="ghost" onClick={handleLeaveTeam}>
-                  <LogOut />
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  onClick={handleLeaveTeam}
+                  className="w-fit rounded-md bg-red-500 px-2 py-1 text-white"
+                >
+                  Leave Team
                 </Button>
               </div>
               <p>
                 <strong>Team Name:</strong> {user.team.name}
               </p>
-              <p>
-                <strong>Team Code:</strong> {user.team.teamCode}
+              <p className="flex flex-row items-center gap-2">
+                <strong>Team Code:</strong> {user.team.teamCode}{" "}
+                <span>
+                  <Copy
+                    onClick={() => copyToClipboard(user.team!.teamCode)}
+                    size={16}
+                  />
+                </span>
               </p>
               <p>
                 <strong>User Count:</strong> {user.team.userCount}

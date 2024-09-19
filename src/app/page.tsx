@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { type dashboardData } from "@/types/client/dashboard";
 import { errorToast } from "@/utils/errors";
 import axios, { type AxiosError } from "axios";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -73,13 +74,24 @@ export default function Home() {
         show={showLeaderboard}
         toggleLeaderboard={toggleLeaderboard}
       />
-      <div className="fixed bottom-0 flex w-full justify-center bg-gray-800 p-4">
+      <div className="fixed bottom-0 flex w-full justify-center gap-8 bg-gray-800 p-4">
         <Button
           onClick={toggleLeaderboard}
-          className="rounded-lg bg-blue-600 px-6 py-2 font-semibold text-white hover:bg-customBlue"
+          className="w-full rounded-lg bg-customGreen px-6 py-2 font-semibold text-leaderboardBg hover:bg-customBlue"
         >
           {showLeaderboard ? "Hide Leaderboard" : "Show Leaderboard"}
         </Button>
+        <Link
+          href={
+            "https://drive.google.com/drive/folders/1ijDDzUyhZHJ2l8DyTizCvPQIvZtHcNj1?usp=drive_link"
+          }
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <Button className="w-full rounded-lg bg-customGreen px-6 py-2 font-semibold text-leaderboardBg hover:bg-customBlue">
+            Questions
+          </Button>
+        </Link>
       </div>
     </main>
   );
