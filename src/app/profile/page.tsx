@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { type ApiResponse, type UserData } from "@/types/client/profile";
 import { copyToClipboard } from "@/utils/copyToClipboard";
 import axios from "axios";
-import { ChevronLeft, Copy } from "lucide-react";
+import { ChevronLeft, Copy, Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -16,6 +16,8 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [name, setName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [pending, setPending] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -46,10 +48,12 @@ const ProfilePage = () => {
   }, [router]);
 
   const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+    setPending(true);
     e.preventDefault();
 
     if (!name && !password) {
       toast.error("Please provide either name or password.");
+      setPending(false);
       return;
     }
 
@@ -93,9 +97,11 @@ const ProfilePage = () => {
         toast.error("Unknown error occurred while updating profile");
       }
     }
+    setPending(false);
   };
 
   const handleLeaveTeam = async () => {
+    setPending(true);
     try {
       const token = localStorage.getItem("token");
       const response = await axios.delete<ApiResponse>("/api/teams/leave", {
@@ -122,6 +128,7 @@ const ProfilePage = () => {
         toast.error("Unknown error occurred while leaving team");
       }
     }
+    setPending(false);
   };
 
   if (loading) {
@@ -161,26 +168,32 @@ const ProfilePage = () => {
               />
             </div>
 
-            <div className="mb-4">
-              <label
-                htmlFor="password"
-                className="text-sm font-semibold text-black"
-              >
-                Password
-              </label>
+            <div className="relative">
               <input
                 id="password"
-                type="password"
-                placeholder="Update password"
-                className="mt-1 w-full rounded-lg border border-gray-300 p-3 text-lg focus:outline-none focus:ring-2 focus:ring-black"
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                className="h-[50px] w-full rounded-lg border border-gray-300 bg-gray-200 px-3 text-lg focus:outline-none focus:ring-2 focus:ring-black"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 transform bg-transparent"
+              >
+                {showPassword ? (
+                  <EyeOff className="text-black" />
+                ) : (
+                  <Eye className="text-black" />
+                )}
+              </button>
             </div>
 
             <Button
               type="submit"
-              disabled={name === user.name && !password}
+              disabled={(name === user.name && !password) || pending}
               className="mt-4 w-full rounded-lg bg-pink-400 p-3 text-lg font-semibold text-white hover:bg-[#FBB3C0] focus:outline-none focus:ring-2 focus:ring-pink-600"
             >
               Update Profile
@@ -195,6 +208,7 @@ const ProfilePage = () => {
                   size="icon"
                   variant="ghost"
                   onClick={handleLeaveTeam}
+                  disabled={pending}
                   className="w-fit rounded-md bg-red-500 px-2 py-1 text-white"
                 >
                   Leave Team

@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { type LoginResponse } from "@/types/api/auth";
 import { errorToast } from "@/utils/errors";
 import axios from "axios";
+import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -25,6 +26,7 @@ const loginSchema = z.object({
 export default function LoginPage() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -107,15 +109,28 @@ export default function LoginPage() {
             >
               Enter Password
             </label>
-            <input
-              id="password"
-              type="password"
-              placeholder="Password"
-              className="h-[50px] w-full rounded-lg border border-gray-300 bg-gray-200 px-3 text-lg focus:outline-none focus:ring-2 focus:ring-black"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className="relative">
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                className="h-[50px] w-full rounded-lg border border-gray-300 bg-gray-200 px-3 text-lg focus:outline-none focus:ring-2 focus:ring-black"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 transform bg-transparent"
+              >
+                {showPassword ? (
+                  <EyeOff className="text-black" />
+                ) : (
+                  <Eye className="text-black" />
+                )}
+              </button>
+            </div>
           </div>
           <div className="mx-1 flex flex-col">
             <label
