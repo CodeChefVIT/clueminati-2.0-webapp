@@ -20,9 +20,7 @@ export async function DELETE() {
   let user;
   try {
     [user] = await db.select().from(users).where(eq(users.email, token.email));
-  } catch (e) {
-    console.log(e);
-
+  } catch {
     return NextResponse.json(
       { message: "Something went wrong" },
       { status: 500 },
@@ -41,9 +39,7 @@ export async function DELETE() {
   let team;
   try {
     [team] = await db.select().from(teams).where(eq(teams.id, user.teamId));
-  } catch (e) {
-    console.log(e);
-
+  } catch {
     return NextResponse.json(
       { message: "Something went wrong" },
       { status: 500 },
@@ -64,9 +60,7 @@ export async function DELETE() {
       .update(users)
       .set({ teamId: null })
       .where(eq(users.email, token.email));
-  } catch (e) {
-    console.log(e);
-
+  } catch {
     return NextResponse.json(
       { message: "Something went wrong" },
       { status: 500 },
@@ -85,9 +79,7 @@ export async function DELETE() {
         })
         .where(eq(teams.id, user.teamId));
     }
-  } catch (e) {
-    console.log(e);
-
+  } catch {
     await db
       .update(users)
       .set({ teamId: team.id })
