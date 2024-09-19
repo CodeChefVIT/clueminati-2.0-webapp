@@ -67,7 +67,7 @@ const Dashboard = () => {
 
       {teamInfo && <TeamInfo teamInfo={teamInfo} />} 
 
-      <section className="mt-20 flex flex-col items-center text-zinc-800">
+      <section className="mt-5 flex flex-col items-center text-zinc-800">
         <div className="flex">
           {leaderboardData.map((item, index) => (
             <LeaderboardItem key={index} rank={index + 1} {...item} />
