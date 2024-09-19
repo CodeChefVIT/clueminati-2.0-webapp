@@ -6,10 +6,26 @@ import { cn } from "@/lib/utils";
 import { type ApiResponse, type UserData } from "@/types/client/profile";
 import { copyToClipboard } from "@/utils/copyToClipboard";
 import axios from "axios";
-import { ChevronLeft, Copy, Eye, EyeOff, Mail, User } from "lucide-react";
+import { jwtDecode } from "jwt-decode";
+import {
+  ChevronLeft,
+  Copy,
+  Eye,
+  EyeOff,
+  Mail,
+  User,
+  Users,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+
+type DecodedToken = {
+  email: string;
+  role: string;
+  iat: number;
+  exp: number;
+};
 
 const ProfilePage = () => {
   const router = useRouter();
@@ -19,11 +35,18 @@ const ProfilePage = () => {
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState(false);
   const [pending, setPending] = useState(false);
+  const [admin, setAdmin] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const token = localStorage.getItem("token");
+        if (token) {
+          const decodedToken: DecodedToken = jwtDecode(token);
+          if (decodedToken.role === "admin") {
+            setAdmin(true);
+          }
+        }
         const response = await axios.get<ApiResponse>("/api/auth/me", {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -141,9 +164,25 @@ const ProfilePage = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <Button size="icon" variant="ghost" onClick={() => void router.push("/")}>
-        <ChevronLeft />
-      </Button>
+      <div className="flex flex-row justify-between">
+        <Button
+          size="icon"
+          variant="ghost"
+          onClick={() => void router.push("/")}
+        >
+          <ChevronLeft />
+        </Button>
+        {admin && (
+          <Button
+            size="icon"
+            onClick={() => void router.push("/giveup")}
+            className="w-min px-3 py-2"
+            variant={"outline"}
+          >
+            <Users size={16} className="mr-2" /> click or gay
+          </Button>
+        )}
+      </div>
       {user ? (
         <div className="rounded-lg bg-white p-6">
           <div className="overflow-hidden rounded-3xl bg-customYellow p-6">

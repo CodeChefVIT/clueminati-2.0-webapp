@@ -1,7 +1,9 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { type Team, type TeamsApiResponse } from "@/types/client/updatescore";
 import axios from "axios";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -36,6 +38,7 @@ export default function UpdateScorePage() {
   );
   const [points, setPoints] = useState<number>(0);
   const [adminKey, setAdminKey] = useState<string>("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchTeams = async () => {
@@ -66,10 +69,12 @@ export default function UpdateScorePage() {
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     e.preventDefault();
 
     if (!selectedTeamCode || !selectedQuestionId || points < 0 || !adminKey) {
       toast.error("Please fill in all fields.");
+      setLoading(false);
       return;
     }
 
@@ -88,23 +93,32 @@ export default function UpdateScorePage() {
         },
       });
 
-      toast.success("Score updated successfully!");
+      toast.success("Chill Bro! success it is bwahaha");
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 400) {
-          toast.error("Question is already solved by the team");
+          toast.error("Kya skill issue hora bhay? pehele hee ho gya hai");
         } else {
-          toast.error("Failed to update score");
+          toast.error("ye bhi meri galti hai??");
         }
       } else {
-        toast.error("An unknown error occurred.");
+        toast.error("An unknown error occurred. This is genuine");
       }
     }
+    setLoading(false);
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="mb-6 text-2xl font-semibold">Award Points to Teams</h1>
+    <div className="container mx-auto mt-8 p-8">
+      <h1 className="mb-2 text-center text-2xl font-semibold">
+        Award Points to Teams
+      </h1>
+      <h1 className="text-md mb-2 text-center font-semibold">
+        Dont feel too powerful
+      </h1>
+      <h1 className="mb-6 text-center text-sm font-semibold">
+        You are still a JC -_-
+      </h1>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
@@ -116,7 +130,7 @@ export default function UpdateScorePage() {
           </label>
           <select
             id="team"
-            className="mt-1 w-full rounded-lg border border-gray-300 p-3 focus:ring-2 focus:ring-blue-600"
+            className="mt-1 w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-black"
             value={selectedTeamCode}
             onChange={(e) => setSelectedTeamCode(e.target.value)}
             required
@@ -139,7 +153,7 @@ export default function UpdateScorePage() {
           </label>
           <select
             id="questionId"
-            className="mt-1 w-full rounded-lg border border-gray-300 p-3 focus:ring-2 focus:ring-blue-600"
+            className="mt-1 w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-black"
             value={selectedQuestionId}
             onChange={(e) => setSelectedQuestionId(e.target.value)}
             required
@@ -161,7 +175,7 @@ export default function UpdateScorePage() {
           </label>
           <div
             id="questionId"
-            className="mt-1 w-full rounded-lg border border-gray-300 p-3 focus:ring-2 focus:ring-blue-600"
+            className="mt-1 w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-black"
           >
             {selectedQuestionId.includes("easy") && "10"}
             {selectedQuestionId.includes("medium") && "15"}
@@ -181,7 +195,7 @@ export default function UpdateScorePage() {
           <input
             id="adminKey"
             type="password"
-            className="mt-1 w-full rounded-lg border border-gray-300 p-3 focus:ring-2 focus:ring-blue-600"
+            className="mt-1 w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-black"
             value={adminKey}
             onChange={(e) => setAdminKey(e.target.value)}
             placeholder="Enter admin key"
@@ -191,10 +205,19 @@ export default function UpdateScorePage() {
 
         <button
           type="submit"
-          className="w-full rounded-lg bg-blue-500 p-3 text-white hover:bg-blue-600 focus:ring-2 focus:ring-blue-600"
+          disabled={loading}
+          className={cn(
+            "w-full rounded-lg bg-customGreen p-3 text-black",
+            loading && "bg-gray-600 text-white",
+          )}
         >
-          Update Score
+          {loading ? "ruko bhay..." : "Update Score"}
         </button>
+        <Link href={"/"}>
+          <button className="mt-4 w-full rounded-lg bg-customBlue p-3 text-black">
+            Get me the fuck out of this
+          </button>
+        </Link>
       </form>
     </div>
   );
