@@ -77,7 +77,7 @@ export default function Home() {
       <div className="fixed bottom-0 flex w-full justify-center gap-8 bg-gray-800 p-4">
         <Button
           onClick={toggleLeaderboard}
-          className="w-full rounded-lg bg-customGreen px-6 py-2 font-semibold text-leaderboardBg hover:bg-customBlue"
+          className="flex w-full flex-1 items-center justify-center rounded-lg bg-customGreen px-6 py-2 text-center text-sm font-semibold text-leaderboardBg hover:bg-customBlue"
         >
           {showLeaderboard ? "Hide Leaderboard" : "Show Leaderboard"}
         </Button>
@@ -87,10 +87,9 @@ export default function Home() {
           }
           rel="noopener noreferrer"
           target="_blank"
+          className="flex w-full flex-1 items-center justify-center rounded-lg bg-customGreen px-6 text-center text-sm font-semibold text-leaderboardBg hover:bg-customBlue"
         >
-          <Button className="w-full rounded-lg bg-customGreen px-6 py-2 font-semibold text-leaderboardBg hover:bg-customBlue">
-            Questions
-          </Button>
+          <p>Questions</p>
         </Link>
       </div>
     </main>
