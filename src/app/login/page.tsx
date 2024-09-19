@@ -1,4 +1,5 @@
 "use client";
+import { cn } from "@/lib/utils";
 import { type LoginResponse } from "@/types/api/auth";
 import { errorToast } from "@/utils/errors";
 import axios from "axios";
@@ -12,6 +13,7 @@ const loginSchema = z.object({
   email: z
     .string()
     .email({ message: "Invalid email address" })
+    .max(50, { message: "Email address too long" })
     .regex(/@vitstudent.ac.in$/, {
       message: "Only VIT student email addresses are allowed",
     }),
@@ -23,10 +25,12 @@ const loginSchema = z.object({
 export default function LoginPage() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   // Handle login submit
   const handleLoginSubmit = async (e: React.FormEvent) => {
+    setLoading(true);
     e.preventDefault();
     const result = loginSchema.safeParse({ email, password });
 
@@ -38,6 +42,7 @@ export default function LoginPage() {
       if (formErrors.password?._errors[0]) {
         toast.error(formErrors.password._errors[0]);
       }
+      setLoading(false);
       return;
     }
 
@@ -58,7 +63,10 @@ export default function LoginPage() {
       }
     } catch (e) {
       errorToast(e);
+      setLoading(false);
     }
+
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -66,7 +74,7 @@ export default function LoginPage() {
   }, []);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-white p-4">
+    <div className="mt-8 flex h-screen flex-col items-center bg-white p-4">
       <main
         className="w-full max-w-md rounded-lg bg-white p-6"
         style={{ fontFamily: "Inter, sans-serif" }}
@@ -77,7 +85,7 @@ export default function LoginPage() {
           <div className="mb-4 flex flex-col">
             <label
               htmlFor="email"
-              className="mb-1 text-sm font-semibold text-black"
+              className="mb-1 text-sm font-semibold tracking-wider text-black"
             >
               Enter VIT Mail
             </label>
@@ -92,10 +100,10 @@ export default function LoginPage() {
             />
           </div>
 
-          <div className="mb-4 flex flex-col">
+          <div className="flex flex-col">
             <label
               htmlFor="password"
-              className="mb-1 text-sm font-semibold text-black"
+              className="mb-1 text-sm font-semibold tracking-wider text-black"
             >
               Enter Password
             </label>
@@ -109,12 +117,25 @@ export default function LoginPage() {
               required
             />
           </div>
+          <div className="mx-1 flex flex-col">
+            <label
+              htmlFor="password"
+              className="mb-1 text-sm font-thin tracking-wider text-black"
+            >
+              We’ve sent your login credentials on your registered email
+            </label>
+          </div>
 
           <button
             type="submit"
-            className="h-[50px] w-full rounded-lg bg-[#FBB3C0] px-3 text-lg font-semibold text-black hover:bg-pink-400 focus:outline-none focus:ring-2 focus:ring-pink-600"
+            className={cn(
+              "text-md h-[50px] w-full rounded-lg bg-[#FBB3C0] px-3 font-medium text-black focus:outline-none focus:ring-2",
+              loading && "text-gray-700",
+              !loading && "transition-all duration-300 active:scale-[0.97]",
+            )}
+            disabled={loading}
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
       </main>
