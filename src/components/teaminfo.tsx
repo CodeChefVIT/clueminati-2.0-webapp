@@ -31,29 +31,36 @@ const TeamInfo: React.FC<TeamInfoProps> = ({ data }) => {
         </div>
       </div>
       <div className="flex w-full flex-col px-3">
-        <Progress />
-        <div className="mt-2.5 flex w-full justify-between text-xs font-medium text-zinc-800">
-          <div className="flex items-center gap-2">
-            <Image
-              src={icon1 as HTMLImageElement}
-              alt=""
-              height={1000}
-              width={1000}
-              className="aspect-square w-[40px] shrink-0 object-contain sm:w-[61px]"
-            />
-            <p>
-              Minimum requirement for {data.nextTier} tier currently is{" "}
-              {data.pointsToNextTier} points
-            </p>
+        <Progress
+          value={data.score / (data.score + data.pointsToNextTier)}
+          className="h-2"
+        />
+        {
+          <div className="mt-2.5 flex w-full justify-between text-xs font-medium text-zinc-800">
+            <div className="flex items-center gap-2">
+              <Image
+                src={icon1 as HTMLImageElement}
+                alt=""
+                height={1000}
+                width={1000}
+                className="aspect-square w-[40px] shrink-0 object-contain sm:w-[61px]"
+              />
+              <p>
+                Minimum requirement for {data.nextTier} tier currently is{" "}
+                {data.pointsToNextTier} points
+              </p>
+            </div>
+            {data.nextTier && (
+              <Image
+                src={icons[data.nextTier]}
+                alt=""
+                height={1000}
+                width={1000}
+                className="aspect-square w-[50px] shrink-0 object-contain shadow-[0px_1px_13px_rgba(216,229,237,0.18)] sm:w-[61px]"
+              />
+            )}
           </div>
-          <Image
-            src={icons[data.nextTier]}
-            alt=""
-            height={1000}
-            width={1000}
-            className="aspect-square w-[50px] shrink-0 object-contain shadow-[0px_1px_13px_rgba(216,229,237,0.18)] sm:w-[61px]"
-          />
-        </div>
+        }
       </div>
     </section>
   );

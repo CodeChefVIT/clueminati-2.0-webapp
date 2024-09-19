@@ -16,8 +16,8 @@ interface DashboardProps {
 const Dashboard: React.FC<DashboardProps> = ({ leaderboardData }) => {
   const router = useRouter();
   return (
-    <main className="mx-auto flex h-full max-h-screen w-full max-w-[480px] flex-col items-center justify-between bg-white px-6 pt-8">
-      <div className="flex-1">
+    <main className="mx-auto flex h-[90vh] max-h-screen w-full max-w-[480px] flex-col items-center justify-between bg-white px-6 pt-8">
+      <div className="">
         <div className="flex w-full items-center justify-between">
           <div className="relative w-full">
             <h1 className="text-center text-3xl font-semibold text-black">
@@ -35,7 +35,7 @@ const Dashboard: React.FC<DashboardProps> = ({ leaderboardData }) => {
         </div>
         <TeamInfo data={leaderboardData} />
       </div>
-      <section className="flex flex-col items-center text-zinc-800">
+      <section className="my-auto flex flex-col items-center text-zinc-800">
         <div className="grid w-full grid-cols-3">
           {leaderboardData.topTeams.slice(0, 3).map((item, index) => (
             <LeaderboardItem key={index} name={item.name} rank={index} />
