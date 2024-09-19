@@ -1,6 +1,7 @@
 "use client";
 import { errorToast } from "@/utils/errors";
 import axios from "axios";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -102,7 +103,6 @@ export default function LoginPage() {
               required
             />
           </div>
-
           <div className="mb-4 flex flex-col">
             <label
               htmlFor="password"
@@ -120,13 +120,22 @@ export default function LoginPage() {
               required
             />
           </div>
-
           <button
             type="submit"
             className="h-[50px] w-full rounded-lg bg-[#FBB3C0] px-3 text-lg font-semibold text-black hover:bg-pink-400 focus:outline-none focus:ring-2 focus:ring-pink-600"
           >
             Sign up
           </button>
+          <Link href="/login">
+            <button
+              type="submit"
+              className="h-[50px] w-full rounded-lg bg-[#FBB3C0] px-3 text-lg font-semibold text-black hover:bg-pink-400 focus:outline-none focus:ring-2 focus:ring-pink-600"
+            >
+              Login Instead
+            </button>
+          </Link>
+          <p className="text-center">Design ki mkc idc</p>
+          <p className="-mt-4 text-center">kaam chala lo</p>
         </form>
       </main>
     </div>
