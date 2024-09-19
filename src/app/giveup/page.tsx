@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const questionIds = [
+  "Secret Station",
+  "Final Station",
   // Station 1, 2, 3: 10 easy questions each
   ...Array.from({ length: 10 }, (_, i) => `station1_easy${i + 1}`),
   ...Array.from({ length: 10 }, (_, i) => `station2_easy${i + 1}`),
@@ -54,6 +56,15 @@ export default function UpdateScorePage() {
     void fetchTeams();
   }, []);
 
+  function getPoints(questionId: string) {
+    if (questionId.includes("easy")) return 10;
+    if (questionId.includes("medium")) return 15;
+    if (questionId.includes("tough")) return 20;
+    if (questionId.includes("Secret") || questionId.includes("Final"))
+      return 100;
+    return 0; // default points if none of the conditions match
+  }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -65,7 +76,7 @@ export default function UpdateScorePage() {
     const updateData = {
       teamCode: selectedTeamCode,
       questionId: selectedQuestionId,
-      points: points,
+      points: getPoints(selectedQuestionId),
       key: adminKey,
     };
 
@@ -148,16 +159,16 @@ export default function UpdateScorePage() {
           >
             Award Points
           </label>
-          <input
-            id="points"
-            type="number"
+          <div
+            id="questionId"
             className="mt-1 w-full rounded-lg border border-gray-300 p-3 focus:ring-2 focus:ring-blue-600"
-            value={points}
-            onChange={(e) => setPoints(Number(e.target.value))}
-            placeholder="Enter points to award"
-            required
-            min={0}
-          />
+          >
+            {selectedQuestionId.includes("easy") && "10"}
+            {selectedQuestionId.includes("medium") && "15"}
+            {selectedQuestionId.includes("tough") && "20"}
+            {selectedQuestionId.includes("Secret") && "100"}
+            {selectedQuestionId.includes("Final") && "100"}
+          </div>
         </div>
 
         <div>

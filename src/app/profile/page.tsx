@@ -64,8 +64,8 @@ const ProfilePage = () => {
       const token = localStorage.getItem("token");
 
       const updateData: { name?: string; password?: string } = {};
-      if (name) updateData.name = name;
-      if (password) updateData.password = password;
+      if (name) updateData.name = name.trim();
+      if (password) updateData.password = password.trim();
 
       const response = await axios.patch<ApiResponse>(
         "/api/auth/update",
