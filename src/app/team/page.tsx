@@ -68,7 +68,7 @@ export default function TeamLookup() {
     try {
       await axios.post(
         "/api/teams/join",
-        { teamCode },
+        { teamCode: teamCode.toUpperCase() },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
