@@ -29,6 +29,16 @@ export default function TeamLookup() {
   }, [router]);
 
   const CreateTeam = async () => {
+    if (teamName.length < 3) {
+      toast.error("Team name must be atleast 3 characters long");
+      return;
+    } else if (teamName.length > 20) {
+      toast.error("Team name must be less than 20 characters long");
+      return;
+    } else if (!/^[a-zA-Z0-9_ ]*$/.test(teamName)) {
+      toast.error("Team name can only contain alphabets, numbers and spaces");
+      return;
+    }
     try {
       const { data }: { data: createTeamAPIProps } = await axios.post(
         "/api/teams/create",

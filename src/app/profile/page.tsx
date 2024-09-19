@@ -48,14 +48,17 @@ const ProfilePage = () => {
   }, [router]);
 
   const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
-    setPending(true);
     e.preventDefault();
 
     if (!name && !password) {
       toast.error("Please provide either name or password.");
       setPending(false);
       return;
+    } else if (password && password.length < 4) {
+      toast.error("Password must be at least 4 characters long.");
+      return;
     }
+    setPending(true);
 
     try {
       const token = localStorage.getItem("token");

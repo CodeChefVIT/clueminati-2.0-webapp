@@ -45,11 +45,30 @@ export async function PATCH(req: NextRequest) {
   let user;
   try {
     const hashedPassword = data.password && hashPassword(data.password);
-    [user] = await db
+    await db
       .update(users)
       .set({ name: data.name, password: hashedPassword })
-      .where(eq(users.email, token.email))
-      .returning({ email: users.email, name: users.name });
+      .where(eq(users.email, token.email));
+
+    user = await db.query.users.findFirst({
+      columns: { name: true, email: true, teamId: true },
+      with: {
+        team: {
+          with: {
+            users: {
+              columns: { name: true, email: true },
+            },
+          },
+          columns: {
+            name: true,
+            teamCode: true,
+            userCount: true,
+            score: true,
+          },
+        },
+      },
+      where: eq(users.email, token.email),
+    });
   } catch {
     NextResponse.json({ message: "Something went wrong" }, { status: 500 });
   }
