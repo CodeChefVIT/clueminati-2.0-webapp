@@ -50,9 +50,24 @@ const Dashboard: React.FC<DashboardProps> = ({ leaderboardData }) => {
 
       <section className="mb-auto mt-10 flex flex-col items-center text-zinc-800">
         <div className="grid w-full grid-cols-3">
-          <LeaderboardItem name={leaderboardData.topTeams[1]!.name} rank={1} />
-          <LeaderboardItem name={leaderboardData.topTeams[0]!.name} rank={0} />
-          <LeaderboardItem name={leaderboardData.topTeams[2]!.name} rank={2} />
+          {leaderboardData.topTeams[1]?.name && (
+            <LeaderboardItem
+              name={leaderboardData.topTeams[1]?.name}
+              rank={1}
+            />
+          )}
+          {leaderboardData.topTeams[0]?.name && (
+            <LeaderboardItem
+              name={leaderboardData.topTeams[0]?.name}
+              rank={0}
+            />
+          )}
+          {leaderboardData.topTeams[2]?.name && (
+            <LeaderboardItem
+              name={leaderboardData.topTeams[2]?.name}
+              rank={2}
+            />
+          )}
         </div>
 
         <Image

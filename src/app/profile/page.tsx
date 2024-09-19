@@ -88,7 +88,7 @@ const ProfilePage = () => {
         if (error.response?.status === 400) {
           toast.error("Invalid data");
         } else if (error.response?.status === 401) {
-          toast.error("Not logged in");
+          // toast.error("Not logged in");
           setTimeout(() => {
             void router.push("/login");
           }, 2000);
@@ -121,7 +121,7 @@ const ProfilePage = () => {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
-          toast.error("Not logged in");
+          // toast.error("Not logged in");
           setTimeout(() => {
             void router.push("/login");
           }, 2000);
