@@ -42,7 +42,7 @@ export default function LoginPage() {
     }
 
     try {
-      const { data } = await axios.post("/api/auth/signup", {
+      await axios.post("/api/auth/signup", {
         email: email.trim(),
         password: password.trim(),
         name: name.trim(),
