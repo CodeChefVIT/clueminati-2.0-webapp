@@ -1,6 +1,6 @@
-import React from "react";
-import Image from "next/image";
 import { icons } from "@/assets/icons";
+import Image from "next/image";
+import React from "react";
 
 interface LeaderboardItemProps {
   name: string;
@@ -8,7 +8,7 @@ interface LeaderboardItemProps {
 }
 
 const LeaderboardItem: React.FC<LeaderboardItemProps> = ({ name, rank }) => {
-  const rankPadding = rank === 1 ? "mt-2" : rank === 2 ? "mt-8 " : "mt-12 ";
+  const rankPadding = rank === 1 ? "mt-12" : rank === 2 ? "mt-20 " : "mt-2";
   const bg: Record<number, string> = {
     0: "bg-customYellow",
     1: "bg-customGreen",

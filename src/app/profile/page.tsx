@@ -2,10 +2,11 @@
 
 import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { type ApiResponse, type UserData } from "@/types/client/profile";
 import { copyToClipboard } from "@/utils/copyToClipboard";
 import axios from "axios";
-import { ChevronLeft, Copy, Eye, EyeOff } from "lucide-react";
+import { ChevronLeft, Copy, Eye, EyeOff, Mail, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -145,13 +146,25 @@ const ProfilePage = () => {
       </Button>
       {user ? (
         <div className="rounded-lg bg-white p-6">
-          <h1 className="mb-4 text-2xl font-semibold">User Info</h1>
-          <p>
-            <strong>Name:</strong> {user.name}
-          </p>
-          <p>
-            <strong>Email:</strong> {user.email}
-          </p>
+          <div className="overflow-hidden rounded-3xl bg-customYellow p-6">
+            <h1 className="mb-4 text-2xl font-semibold">User Info</h1>
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-row items-center gap-2">
+                <strong>
+                  <User />
+                </strong>{" "}
+                {user.name}
+              </div>
+              <div className="flex w-full flex-row items-center gap-2">
+                <strong>
+                  <Mail />
+                </strong>
+                <span className="max-w-full overflow-hidden truncate text-ellipsis">
+                  {user.email}
+                </span>
+              </div>
+            </div>
+          </div>
 
           <form onSubmit={handleUpdate} className="mt-6">
             <div className="mb-4">
@@ -194,13 +207,20 @@ const ProfilePage = () => {
               </button>
             </div>
 
-            <Button
+            <button
               type="submit"
-              disabled={(name === user.name && !password) || pending}
-              className="mt-4 w-full rounded-lg bg-pink-400 p-3 text-lg font-semibold text-white hover:bg-[#FBB3C0] focus:outline-none focus:ring-2 focus:ring-pink-600"
+              className={cn(
+                "text-md mt-6 h-[50px] w-full rounded-lg bg-customBlue px-3 font-medium text-black",
+                (name === user.name.trim() && !password.trim()) || pending
+                  ? "bg-gray-500 text-white"
+                  : "transition-all duration-300 active:scale-[0.97]",
+              )}
+              disabled={
+                (name === user.name.trim() && !password.trim()) || pending
+              }
             >
               Update Profile
-            </Button>
+            </button>
           </form>
 
           {user.team ? (
@@ -239,8 +259,8 @@ const ProfilePage = () => {
               <h3 className="mt-4 text-lg font-medium">Team Members</h3>
               <ul className="list-disc pl-5">
                 {user.team.users.map((member, index) => (
-                  <li key={index}>
-                    {member.name} ({member.email})
+                  <li key={index} className="ml-2 font-medium">
+                    {member.name}
                   </li>
                 ))}
               </ul>
