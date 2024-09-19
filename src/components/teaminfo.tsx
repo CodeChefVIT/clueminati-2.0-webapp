@@ -46,8 +46,9 @@ const TeamInfo: React.FC<TeamInfoProps> = ({ data }) => {
                 className="aspect-square w-[40px] shrink-0 object-contain sm:w-[61px]"
               />
               <p>
-                Minimum requirement for {data.nextTier} tier currently is{" "}
-                {data.pointsToNextTier} points
+                {data.nextTier
+                  ? `Minimum requirement for ${data.nextTier} tier currently is ${data.pointsToNextTier} points`
+                  : "Congratulations! You have reached the highest tier."}
               </p>
             </div>
             {data.nextTier && (

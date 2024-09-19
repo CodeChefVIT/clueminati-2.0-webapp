@@ -22,6 +22,7 @@ export async function GET() {
           columns: {
             name: true,
             score: true,
+            station: true,
           },
         },
       },
@@ -62,6 +63,7 @@ export async function GET() {
         nextTier: tiers.next.toLowerCase(),
         pointsToNextTier: (tiers.scoreToBeat ?? 0) - (user.team?.score ?? 0),
         name: user.team?.name,
+        station: user.team?.station,
       },
     },
     { status: 200 },

@@ -33,9 +33,9 @@ const Leaderboard: React.FC<LeaderboardProps> = ({
 
   return (
     <Drawer.Root open={show} onOpenChange={toggleLeaderboard}>
-      <Drawer.Trigger asChild>
+      {/* <Drawer.Trigger asChild>
         <Button className="hidden">Open Leaderboard</Button>
-      </Drawer.Trigger>
+      </Drawer.Trigger> */}
 
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 z-40 bg-black bg-opacity-50" />

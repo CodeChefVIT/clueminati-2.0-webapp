@@ -68,15 +68,13 @@ export default function Home() {
 
   return (
     <main className="relative flex h-screen max-h-screen flex-col bg-gray-100">
-      <div className="h-full flex-1">
-        <Dashboard leaderboardData={leaderboardData} />
-      </div>
+      <Dashboard leaderboardData={leaderboardData} />
       <Leaderboard
         leaderboardData={leaderboardData}
         show={showLeaderboard}
         toggleLeaderboard={toggleLeaderboard}
       />
-      <div className="flex w-full justify-center gap-8 bg-gray-800 p-4">
+      <div className="absolute bottom-0 flex w-full justify-center gap-8 bg-gray-800 p-4">
         <Button
           onClick={toggleLeaderboard}
           className="flex w-full flex-1 items-center justify-center rounded-lg bg-customGreen px-6 py-2 text-center text-sm font-semibold text-leaderboardBg hover:bg-customBlue"
