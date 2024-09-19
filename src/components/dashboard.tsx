@@ -7,8 +7,8 @@ import { type dashboardData } from "@/types/client/dashboard";
 import { UserIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Button } from "./ui/button";
 import CountdownTimer from "./timer";
+import { Button } from "./ui/button";
 
 interface DashboardProps {
   leaderboardData: dashboardData;
@@ -50,10 +50,11 @@ const Dashboard: React.FC<DashboardProps> = ({ leaderboardData }) => {
 
       <section className="mb-auto mt-10 flex flex-col items-center text-zinc-800">
         <div className="grid w-full grid-cols-3">
-          {leaderboardData.topTeams.slice(0, 3).map((item, index) => (
-            <LeaderboardItem key={index} name={item.name} rank={index} />
-          ))}
+          <LeaderboardItem name={leaderboardData.topTeams[1]!.name} rank={1} />
+          <LeaderboardItem name={leaderboardData.topTeams[0]!.name} rank={0} />
+          <LeaderboardItem name={leaderboardData.topTeams[2]!.name} rank={2} />
         </div>
+
         <Image
           loading="lazy"
           src={myImage as HTMLImageElement}

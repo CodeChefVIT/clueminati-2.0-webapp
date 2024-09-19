@@ -65,14 +65,14 @@ const Page = () => {
               />
               <button
                 type="button"
-                className="absolute right-2 top-1/2 -translate-y-1/2 transform rounded bg-gray-200 p-2 hover:bg-gray-300"
+                className="absolute right-2 top-1/2 -translate-y-1/2 transform rounded bg-gray-200 p-2"
                 onClick={() => copyToClipboard(teamCode!)}
               >
                 <Copy className="text-lg text-gray-600" />
               </button>
             </div>
             <button
-              className={`mt-4 w-full rounded-lg bg-[#88DBF9] py-2 font-semibold text-black hover:bg-blue-700`}
+              className={`mt-4 w-full rounded-lg bg-[#88DBF9] py-2 font-semibold text-black`}
               onClick={() => router.push("/")}
             >
               Next

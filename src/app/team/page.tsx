@@ -2,6 +2,7 @@
 
 import Loading from "@/components/Loading";
 import { Switch } from "@/components/ui/switch";
+import { cn } from "@/lib/utils";
 import { type createTeamAPIProps } from "@/types/api/team";
 import { errorToast } from "@/utils/errors";
 import axios, { type AxiosError } from "axios";
@@ -122,7 +123,7 @@ export default function TeamLookup() {
               onCheckedChange={() => setIsCreatingTeam((prev) => !prev)}
             />
           </div>
-          <div className="mt-2 text-center text-sm font-normal text-gray-400">
+          <div className="mt-2 text-center text-sm font-normal tracking-wider text-gray-400">
             {isCreatingTeam
               ? "Team Leader makes the New Team"
               : "Join an Existing Team"}
@@ -134,7 +135,7 @@ export default function TeamLookup() {
             <div className="mb-4">
               <label
                 htmlFor="teamName"
-                className="text-sm font-semibold text-gray-700"
+                className="text-sm font-semibold tracking-wider text-gray-700"
               >
                 Team Name
               </label>
@@ -142,7 +143,7 @@ export default function TeamLookup() {
                 value={teamName}
                 required
                 onChange={(e) => setTeamName(e.target.value)}
-                className="w-full rounded-lg border-none bg-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="h-[50px] w-full rounded-lg border-none bg-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black"
                 placeholder="Enter team name"
               />
             </div>
@@ -150,20 +151,20 @@ export default function TeamLookup() {
             <div className="mb-4">
               <label
                 htmlFor="teamCode"
-                className="text-sm font-semibold text-gray-700"
+                className="text-sm font-semibold tracking-wider text-gray-700"
               >
                 Join a team
               </label>
-              <p className="mb-2 text-sm text-gray-500">
+              {/* <p className="mb-2 text-sm text-gray-500">
                 Enter the code from your team to join them!
-              </p>
+              </p> */}
               <input
                 value={teamCode}
                 onChange={(e) => setTeamCode(e.target.value)}
                 required
                 maxLength={6}
                 minLength={6}
-                className="w-full rounded-lg border-none bg-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="h-[50px] w-full rounded-lg border-none bg-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black"
                 placeholder="Enter team code"
               />
             </div>
@@ -172,11 +173,15 @@ export default function TeamLookup() {
           <button
             type="submit"
             disabled={isLoading}
-            className={`w-full rounded-lg py-2 font-medium ${
-              isCreatingTeam
-                ? "bg-[#AEF276] text-black hover:bg-green-700"
-                : "bg-[#88DBF9] text-black hover:bg-blue-700"
-            } mt-4`}
+            className={cn(
+              `text-md h-[50px] w-full rounded-lg px-3 font-medium text-black ${
+                isCreatingTeam
+                  ? "bg-customGreen text-black"
+                  : "bg-customBlue text-black"
+              } mt-4`,
+              isLoading && "text-gray-700",
+              !isLoading && "transition-all duration-300 active:scale-[0.97]",
+            )}
           >
             {isLoading
               ? "Loading..."

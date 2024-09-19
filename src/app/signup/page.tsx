@@ -43,7 +43,7 @@ export default function LoginPage() {
     }
 
     try {
-      await axios.post("/api/auth/signup", {
+      await axios.post("/api/auth/signup-admin", {
         email: email.trim(),
         password: password.trim(),
         name: name.trim(),
@@ -62,11 +62,11 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-white p-4">
-      <main
-        className="w-full max-w-md rounded-lg bg-white p-6"
-        style={{ fontFamily: "Inter, sans-serif" }}
-      >
+      <main className="w-full max-w-md rounded-lg bg-white p-6">
         <h1 className="mb-6 text-center text-2xl font-semibold">Sign up</h1>
+        <h1 className="mb-6 text-center text-xl font-semibold">
+          (admin ki aukaad hai?)
+        </h1>
 
         <form className="flex flex-col gap-4" onSubmit={handleLoginSubmit}>
           <div className="mb-4 flex flex-col">

@@ -76,18 +76,15 @@ export default function LoginPage() {
   }, []);
 
   return (
-    <div className="mt-8 flex h-screen flex-col items-center bg-white p-4">
-      <main
-        className="w-full max-w-md rounded-lg bg-white p-6"
-        style={{ fontFamily: "Inter, sans-serif" }}
-      >
+    <div className="mt-8 flex h-screen flex-col items-center bg-white">
+      <main className="w-full max-w-md rounded-lg bg-white p-8">
         <h1 className="mb-6 text-center text-2xl font-semibold">Login</h1>
 
         <form className="flex flex-col gap-4" onSubmit={handleLoginSubmit}>
           <div className="mb-4 flex flex-col">
             <label
               htmlFor="email"
-              className="mb-1 text-sm font-semibold tracking-wider text-black"
+              className="mb-1 text-sm font-semibold tracking-wider text-gray-700"
             >
               Enter VIT Mail
             </label>
@@ -105,7 +102,7 @@ export default function LoginPage() {
           <div className="flex flex-col">
             <label
               htmlFor="password"
-              className="mb-1 text-sm font-semibold tracking-wider text-black"
+              className="mb-1 text-sm font-semibold tracking-wider text-gray-700"
             >
               Enter Password
             </label>
@@ -144,7 +141,7 @@ export default function LoginPage() {
           <button
             type="submit"
             className={cn(
-              "text-md h-[50px] w-full rounded-lg bg-[#FBB3C0] px-3 font-medium text-black focus:outline-none focus:ring-2",
+              "text-md h-[50px] w-full rounded-lg bg-[#FBB3C0] px-3 font-medium text-black",
               loading && "text-gray-700",
               !loading && "transition-all duration-300 active:scale-[0.97]",
             )}
