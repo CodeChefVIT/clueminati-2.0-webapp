@@ -41,35 +41,39 @@ export async function POST(req: NextRequest) {
 
   let team;
   try {
-    [team] = await db
-      .select()
-      .from(teams)
-      .where(eq(teams.teamCode, data.teamCode));
-  } catch {
-    return NextResponse.json(
-      { message: "Something went wrong" },
-      { status: 500 },
-    );
-  }
+    // Use a transaction to ensure data consistency
+    await db.transaction(async (trx) => {
+      [team] = await trx
+        .select()
+        .from(teams)
+        .where(eq(teams.teamCode, data.teamCode));
 
-  if (!team) {
-    return NextResponse.json({ message: "Team not found" }, { status: 404 });
-  } else if (team.solved?.includes(data.questionId)) {
-    return NextResponse.json(
-      { message: "Question already solved" },
-      { status: 400 },
-    );
-  }
+      if (!team) {
+        throw new Error("Team not found");
+      }
 
-  try {
-    await db
-      .update(teams)
-      .set({
-        score: sql`${teams.score} + ${data.points}`,
-        solved: sql`array_append(solved, ${data.questionId})`,
-      })
-      .where(eq(teams.teamCode, data.teamCode));
-  } catch {
+      if (team.solved?.includes(data.questionId)) {
+        throw new Error("Question already solved");
+      }
+
+      await trx
+        .update(teams)
+        .set({
+          score: sql`${teams.score} + ${data.points}`,
+          solved: sql`array_append(solved, ${data.questionId})`,
+        })
+        .where(eq(teams.teamCode, data.teamCode));
+    },{
+      isolationLevel: "serializable",
+    });
+  } catch (e) {
+    const error = e as Error;
+    if (error.message === "Team not found") {
+      return NextResponse.json({ message: error.message }, { status: 404 });
+    }
+    if (error.message === "Question already solved") {
+      return NextResponse.json({ message: error.message }, { status: 400 });
+    }
     return NextResponse.json(
       { message: "Something went wrong" },
       { status: 500 },
