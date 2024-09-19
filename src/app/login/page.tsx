@@ -14,10 +14,7 @@ const loginSchema = z.object({
   email: z
     .string()
     .email({ message: "Invalid email address" })
-    .max(50, { message: "Email address too long" })
-    .regex(/@vitstudent.ac.in$/, {
-      message: "Only VIT student email addresses are allowed",
-    }),
+    .max(50, { message: "Email address too long" }),
   password: z
     .string()
     .min(4, { message: "Password must be at least 4 characters long" }),
