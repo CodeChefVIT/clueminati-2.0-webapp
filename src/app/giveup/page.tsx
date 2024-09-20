@@ -72,7 +72,7 @@ export default function UpdateScorePage() {
     setLoading(true);
     e.preventDefault();
 
-    if (!selectedTeamCode || !selectedQuestionId || points < 0 || !adminKey) {
+    if (!selectedTeamCode || !selectedQuestionId || points < 0) {
       toast.error("Please fill in all fields.");
       setLoading(false);
       return;
@@ -82,7 +82,7 @@ export default function UpdateScorePage() {
       teamCode: selectedTeamCode,
       questionId: selectedQuestionId,
       points: getPoints(selectedQuestionId),
-      key: adminKey,
+      key: "skill-issue-bastards",
     };
 
     try {
@@ -187,7 +187,7 @@ export default function UpdateScorePage() {
           </div>
         </div>
 
-        <div>
+        {/* <div>
           <label
             htmlFor="adminKey"
             className="block text-sm font-medium text-gray-700"
@@ -203,7 +203,7 @@ export default function UpdateScorePage() {
             placeholder="Enter admin key"
             required
           />
-        </div>
+        </div> */}
 
         <button
           type="submit"
