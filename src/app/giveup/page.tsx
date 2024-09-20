@@ -136,11 +136,13 @@ export default function UpdateScorePage() {
             required
           >
             <option value="">Select a team</option>
-            {teams.map((team) => (
-              <option key={team.code} value={team.code}>
-                {team.name} (Code: {team.code})
-              </option>
-            ))}
+            {teams
+              .sort((a, b) => a.name.localeCompare(b.name)) // Sort teams alphabetically by name
+              .map((team) => (
+                <option key={team.code} value={team.code}>
+                  {team.name} (Code: {team.code})
+                </option>
+              ))}
           </select>
         </div>
 
