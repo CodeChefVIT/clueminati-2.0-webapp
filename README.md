@@ -4,8 +4,7 @@
 <h2 align="center"> Clueminati 2.0 </h2>
 <br/>
 
-> <p>Clueminati is CodeChef VIT’s treasure hunt event organised for the second time in 2024. The portal serves as a webapp
-for the participants to create or join team and keep track of their team's score and their position on the leaderboard. 
+> <p>Clueminati is CodeChef VIT's annual treasure hunt event, returning for its second edition in 2024. This web application facilitates team creation, score tracking, and real-time leaderboard management, providing participants with a seamless and engaging experience throughout the competition. 
 
 </p>
 
