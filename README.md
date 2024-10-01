@@ -25,6 +25,7 @@
 
 - You can either join a team or create a new one with just a few clicks.
 - A dynamic leader board update system with tiers.
+- A fully functional portal with support for gestures and compatibility across devices with varying screen resolutions.
 
 ## 🖼 Screenshots
 
