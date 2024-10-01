@@ -23,34 +23,34 @@
 
 ## 💡 Features:
 
-- Creating and joining teams with simple clicks.
+- You can either join a team or create a new one with just a few clicks.
 - A dynamic leader board update system with tiers.
 
 ## 🖼 Screenshots
 
 <p align="center">
 
-#### Page 1
+#### Login
 
 <img width="1440" alt="Login" src="public/login.png">
 
-#### Page 2
+#### Join Team 
 
 <img width="1440" alt="Join team" src="public/join.png">
 
-### Page 3
+### Create Team
 
 <img width="1440" alt="Create team" src="public/create.png">
 
-### Page 4
+### Sharing Team Code
 
 <img width="1440" alt="Share team code" src="public/form.png">
 
-### Page 5
+### Dashboard
 
 <img width="1440" alt="Dashboard" src="public/dash.png">
 
-### Page 6
+### Leader Board
 
 <img width="1440" alt="Leaderboard" src="public/leaderboard.png">
 
