@@ -10,7 +10,7 @@
 
 ## 🌐 Deploy
 
-[https://clueminati.codechefvit.com](https://clueminati.codechefvit.com)
+[https://clueminati24.codechefvit.com](https://clueminati24.codechefvit.com)
 
 ## ⚙️ Tech Stack:
 
@@ -23,10 +23,8 @@
 
 ## 💡 Features:
 
-- Individual profile which also tracks details of other teammates.
-- A progressive web-app with all necessary functionalities.
 - Creating and joining teams with simple clicks.
-- A dynamic leaderboard update system with tiers.
+- A dynamic leader board update system with tiers.
 
 ## 🖼 Screenshots
 
@@ -34,15 +32,27 @@
 
 #### Page 1
 
-<img width="1440" alt="image" src="">
+<img width="1440" alt="Login" src="public/login.png">
 
 #### Page 2
 
-<img width="1440" alt="image" src="">
+<img width="1440" alt="Join team" src="public/join.png">
 
 ### Page 3
 
-<img width="1440" alt="image" src="">
+<img width="1440" alt="Create team" src="public/create.png">
+
+### Page 4
+
+<img width="1440" alt="Share team code" src="public/form.png">
+
+### Page 5
+
+<img width="1440" alt="Dashboard" src="public/dash.png">
+
+### Page 6
+
+<img width="1440" alt="Leaderboard" src="public/leaderboard.png">
 
 </p>
 
