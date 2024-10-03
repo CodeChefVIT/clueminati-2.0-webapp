@@ -23,8 +23,9 @@
 
 ## 💡 Features:
 
+- Admin access to oversee and manage teams, monitor scores, and handle leaderboard updates efficiently.
 - You can either join a team or create a new one with just a few clicks.
-- A dynamic leader board update system with tiers.
+- A dynamic leaderboard.
 - A fully functional portal with support for gestures and compatibility across devices with varying screen resolutions.
 
 ## 🖼 Screenshots
@@ -51,7 +52,7 @@
 
 <img width="1440" alt="Dashboard" src="public/dash.png">
 
-### Leader Board
+### Leaderboard
 
 <img width="1440" alt="Leaderboard" src="public/leaderboard.png">
 
