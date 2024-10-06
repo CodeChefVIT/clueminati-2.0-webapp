@@ -114,11 +114,11 @@ export default function UpdateScorePage() {
         Award Points to Teams
       </h1>
       <h1 className="text-md mb-2 text-center font-semibold">
-        Dont feel too powerful
+        Don&apos;t feel too powerful
       </h1>
-      <h1 className="mb-6 text-center text-sm font-semibold">
+      {/* <h1 className="mb-6 text-center text-sm font-semibold">
         You are still a JC -_-
-      </h1>
+      </h1> */}
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
@@ -217,7 +217,9 @@ export default function UpdateScorePage() {
         </button>
         <Link href={"/"}>
           <button className="mt-4 w-full rounded-lg bg-customBlue p-3 text-black">
-            Get me the fuck out of this
+            {/* AYO!!! ARE YOU SERIOUSLY HERE AND READING THE CODE??? */}
+            {/* Get me the fuck out of this */}
+            Go back
           </button>
         </Link>
       </form>

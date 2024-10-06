@@ -179,7 +179,7 @@ const ProfilePage = () => {
             className="w-min px-3 py-2"
             variant={"outline"}
           >
-            <Users size={16} className="mr-2" /> click or gay
+            <Users size={16} className="mr-2" /> Admin
           </Button>
         )}
       </div>
