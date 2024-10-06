@@ -28,35 +28,46 @@
 - A dynamic leaderboard.
 - A fully functional portal with support for gestures and compatibility across devices with varying screen resolutions.
 
+
 ## 🖼 Screenshots
 
-<p align="center">
+<table>
+  <tr>
+    <td align="center">
+      <img src="public/login.jpeg" alt="Login" width="300"/>
+      <br/>
+      <p>Login</p>
+    </td>
+    <td align="center">
+      <img src="public/join.jpeg" alt="Join" width="300"/>
+      <br/>
+      <p>Join Team</p>
+    </td>
+    <td align="center">
+      <img src="public/create.jpeg" alt="Create" width="300"/>
+      <br/>
+      <p>Create Team</p>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="public/dashboard.jpeg" alt="Dashboard" width="300"/>
+      <br/>
+      <p>Dashboard</p>
+    </td>
+    <td align="center">
+      <img src="public/leaderboard.jpeg" alt="Leaderboard" width="300"/>
+      <br/>
+      <p>Leaderboard</p>
+    </td>
+    <td align="center">
+      <img src="public/profile.jpeg" alt="Profile" width="300"/>
+      <br/>
+      <p>View Profile</p>
+    </td>
+  </tr>
+</table>
 
-#### Login
-
-<img width="1440" alt="Login" src="public/login.png">
-
-#### Join Team 
-
-<img width="1440" alt="Join team" src="public/join.png">
-
-### Create Team
-
-<img width="1440" alt="Create team" src="public/create.png">
-
-### Sharing Team Code
-
-<img width="1440" alt="Share team code" src="public/form.png">
-
-### Dashboard
-
-<img width="1440" alt="Dashboard" src="public/dash.png">
-
-### Leaderboard
-
-<img width="1440" alt="Leaderboard" src="public/leaderboard.png">
-
-</p>
 
 ## 🏁 Get Started
 
