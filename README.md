@@ -71,10 +71,10 @@
 
 ## 🏁 Get Started
 
-To get started, fork your own copy and clone the master branch. To clone a branch you can run the following:
+To get started, fork your own copy and clone the main branch. To clone a branch you can run the following:
 
 ```bash
-git clone -b master https://github.com/<Your username>/<repo-name>
+git clone -b main https://github.com/<Your username>/clueminati-2.0-webapp.git
 ```
 
 Run these commands on your bash/terminal and open it in a code editor of your choice.
@@ -92,10 +92,9 @@ pnpm dev
 ```
 
 ## 📝 Note:
-
-- To have the entire functionality please note that you will have to either create your own backend.
 - Make sure you set user role as 'admin' in database to access all the admin specific APIs.
-- You can also make a forked copy of the Clueminati Portal by heading over to: https://github.com/CodeChefVIT/clueminati-2.0-webapp.git
+- For detailed API specifications, including routes, request formats, and response examples, please refer to the documentation [here](https://documenter.getpostman.com/view/25706513/2sAXqp83bu).
+
 
 
 ## 🚀 Contributors
