@@ -14,12 +14,12 @@
 
 ## ⚙️ Tech Stack:
 
-- Next.js
-- TypeScript
-- Tailwind CSS
-- React Hot Toast
-- Axios
-- Shadcn
+- [Next.js](https://nextjs.org)
+- [TypeScript](https://www.typescriptlang.org)
+- [Tailwind CSS](https://tailwindcss.com)
+- [React Hot Toast](https://react-hot-toast.com)
+- [Axios](https://axios-http.com)
+- [Shadcn](https://ui.shadcn.com)
 
 ## 💡 Features:
 
@@ -36,7 +36,7 @@
     <td align="center">
       <img src="public/login.jpeg" alt="Login" width="300"/>
       <br/>
-      <p>Login</p>
+      <p>Login Page</p>
     </td>
     <td align="center">
       <img src="public/join.jpeg" alt="Join" width="300"/>
@@ -49,7 +49,13 @@
       <p>Create Team</p>
     </td>
   </tr>
+
   <tr>
+      <td align="center">
+      <img src="public/share.jpeg" alt="Share" width="300"/>
+      <br/>
+      <p>Share Team Code</p>
+    </td>
     <td align="center">
       <img src="public/dashboard.jpeg" alt="Dashboard" width="300"/>
       <br/>
@@ -60,10 +66,36 @@
       <br/>
       <p>Leaderboard</p>
     </td>
+  </tr>
+
+  <tr>
     <td align="center">
       <img src="public/profile.jpeg" alt="Profile" width="300"/>
       <br/>
       <p>View Profile</p>
+    </td>
+    <td align="center">
+      <img src="public/post-start.jpeg" alt="Post Start" width="300"/>
+      <br/>
+      <p>Dashboard (Event live)</p>
+    </td>
+    <td align="center">
+      <img src="public/admin-profile.jpeg" alt="Admin Profile" width="300"/>
+      <br/>
+      <p>Admin Profile</p>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center">
+      <img src="public/score.jpeg" alt="Score" width="300"/>
+      <br/>
+      <p>Score Update</p>
+    </td>
+    <td align="center">
+      <img src="public/postman.jpeg" alt="Dashboard" width="300"/>
+      <br/>
+      <p>API Route reference</p>
     </td>
   </tr>
 </table>
@@ -71,21 +103,26 @@
 
 ## 🏁 Get Started
 
-To get started, fork your own copy and clone the main branch. To clone a branch you can run the following:
-
+1) To get started, fork your own copy and clone the main branch. To clone a branch you can run the following:
 ```bash
 git clone -b main https://github.com/<Your username>/clueminati-2.0-webapp.git
 ```
 
 Run these commands on your bash/terminal and open it in a code editor of your choice.
 
-Run the following to install all the dependencies:
+2) Run the following to install all the dependencies:
 
 ```bash
 pnpm i
 ```
 
-To start your development server run:
+3. Intialise environement variables and run the following command to set up the database:
+```bash
+pnpm db:migrate
+```
+
+
+4) To start your development server run:
 
 ```bash
 pnpm dev
