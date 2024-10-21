@@ -1,4 +1,4 @@
-<p align="center"><a href="https://www.codechefvit.com" target="_blank"><img src="https://i.ibb.co/4J9LXxS/cclogo.png" width=160 title="CodeChef-VIT" alt="Codechef-VIT"></a>
+<p align="center"><a href="https://www.codechefvit.com" target="_blank"><img src="https://i.ibb.co/4J9LXxS/cclogo.png" width=160 title="CodeChef-VIT" alt="CodeChef-VIT"></a>
 </p>
 
 <h2 align="center"> Clueminati 2.0 </h2>
@@ -20,6 +20,7 @@
 - [React Hot Toast](https://react-hot-toast.com)
 - [Axios](https://axios-http.com)
 - [Shadcn](https://ui.shadcn.com)
+- [NeonDB](https://neon.tech)
 
 ## 💡 Features:
 
@@ -88,14 +89,13 @@
 
   <tr>
     <td align="center">
+    </td>
+    <td align="center">
       <img src="public/score.jpeg" alt="Score" width="300"/>
       <br/>
       <p>Score Update</p>
     </td>
-    <td align="center">
-      <img src="public/postman.jpeg" alt="Dashboard" width="300"/>
-      <br/>
-      <p>API Route reference</p>
+	<td align="center">
     </td>
   </tr>
 </table>
@@ -105,7 +105,7 @@
 
 1) To get started, fork your own copy and clone the main branch. To clone a branch you can run the following:
 ```bash
-git clone -b main https://github.com/<Your username>/clueminati-2.0-webapp.git
+git clone -b main https://github.com/<Your username>/clueminati-portal-2.0.git
 ```
 
 Run these commands on your bash/terminal and open it in a code editor of your choice.
@@ -116,7 +116,7 @@ Run these commands on your bash/terminal and open it in a code editor of your ch
 pnpm i
 ```
 
-3. Intialise environement variables and run the following command to set up the database:
+3. Initialize environment variables and set up a PostgreSQL database using NeonDB. Update the database URL with the connection string and run the following command to set-up your database schema:
 ```bash
 pnpm db:migrate
 ```
@@ -129,7 +129,7 @@ pnpm dev
 ```
 
 ## 📝 Note:
-- Make sure you set user role as 'admin' in database to access all the admin specific APIs.
+- Make sure you set the user role as 'admin' in database to access all the admin specific APIs.
 - For detailed API specifications, including routes, request formats, and response examples, please refer to the documentation [here](https://documenter.getpostman.com/view/25706513/2sAXqp83bu).
 
 
