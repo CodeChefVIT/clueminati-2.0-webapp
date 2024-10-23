@@ -89,13 +89,9 @@
 
   <tr>
     <td align="center">
-    </td>
-    <td align="center">
       <img src="public/score.jpeg" alt="Score" width="300"/>
       <br/>
       <p>Score Update</p>
-    </td>
-	<td align="center">
     </td>
   </tr>
 </table>
@@ -111,25 +107,28 @@ git clone -b main https://github.com/<Your username>/clueminati-portal-2.0.git
 Run these commands on your bash/terminal and open it in a code editor of your choice.
 
 2) Run the following to install all the dependencies:
-
 ```bash
 pnpm i
 ```
 
-3. Initialize environment variables and set up a PostgreSQL database using NeonDB. Update the database URL with the connection string and run the following command to set-up your database schema:
+3) Run the following command to create .env and modify the values as per requirements.
+```bash
+scp .env.example .env
+```
+
+4) Update `DATABASE_URL` in `.env` with PostgreSQL database URI. Run the following command to migrate your database schema:
 ```bash
 pnpm db:migrate
 ```
 
 
-4) To start your development server run:
-
+5) To start your development server run:
 ```bash
 pnpm dev
 ```
 
 ## 📝 Note:
-- Make sure you set the user role as 'admin' in database to access all the admin specific APIs.
+- Make sure you set the user role as `admin` in database to access all the admin specific APIs.
 - For detailed API specifications, including routes, request formats, and response examples, please refer to the documentation [here](https://documenter.getpostman.com/view/25706513/2sAXqp83bu).
 
 
